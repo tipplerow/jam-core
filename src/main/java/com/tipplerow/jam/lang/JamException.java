@@ -21,6 +21,8 @@ import java.io.PrintWriter;
 
 /**
  * Encapsulates exception management for the JAM library.
+ *
+ * @author Scott Shaffer
  */
 public final class JamException {
     private static PrintWriter logWriter = null;
@@ -100,7 +102,7 @@ public final class JamException {
     /**
      * Wraps another exception in a new runtime exception.
      *
-     * @param ex the exeception to wrap.
+     * @param ex the exception to wrap.
      *
      * @return the new exception.
      */

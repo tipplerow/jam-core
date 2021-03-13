@@ -23,6 +23,8 @@ import java.util.regex.Pattern;
 
 /**
  * Provides utility methods operating on strings.
+ *
+ * @author Scott Shaffer
  */
 public final class StringUtil {
     private StringUtil() {}
@@ -111,7 +113,7 @@ public final class StringUtil {
      * to {@code lineLength} characters.
      */
     public static List<String> multiLine(String string, int lineLength) {
-        List<String> lines = new ArrayList<String>();
+        List<String> lines = new ArrayList<>();
 
         while (string.length() > lineLength) {
             lines.add(string.substring(0, lineLength));

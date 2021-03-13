@@ -32,6 +32,8 @@ import java.util.zip.GZIPOutputStream;
 
 /**
  * Provides utility methods for I/O operations on compressed files.
+ * 
+ * @author Scott Shaffer
  */
 public final class ZipUtil {
     /**
@@ -77,8 +79,8 @@ public final class ZipUtil {
         try {
             return new GZIPInputStream(new FileInputStream(file));
         }
-        catch (IOException ioex) {
-            throw JamException.runtime(ioex);
+        catch (IOException ex) {
+            throw JamException.runtime(ex);
         }
     }
 
@@ -96,8 +98,8 @@ public final class ZipUtil {
         try {
             return new GZIPOutputStream(new FileOutputStream(file));
         }
-        catch (IOException ioex) {
-            throw JamException.runtime(ioex);
+        catch (IOException ex) {
+            throw JamException.runtime(ex);
         }
     }
 

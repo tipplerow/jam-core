@@ -26,6 +26,7 @@ import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.tipplerow.jam.app.JamLogger;
 import com.tipplerow.jam.io.DataReader;
 import com.tipplerow.jam.io.IOUtil;
 import com.tipplerow.jam.math.DoubleRange;
@@ -34,8 +35,6 @@ import com.tipplerow.jam.math.IntUtil;
 import com.tipplerow.jam.math.LongRange;
 import com.tipplerow.jam.math.LongUtil;
 import com.tipplerow.jam.regex.RegexUtil;
-
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Helps to manage system properties.
@@ -57,8 +56,9 @@ import lombok.extern.slf4j.Slf4j;
  * The file may also contain single-line and inline comments starting
  * with the hash sign ({@code '#'}).  All text from the {@code '#'}
  * character to the end of the line will be ignored.
+ *
+ * @author Scott Shaffer
  */
-@Slf4j
 public final class JamProperties {
     private JamProperties() {}
 
@@ -749,7 +749,7 @@ public final class JamProperties {
      */
     public static void setProperty(String propertyName, String propertyValue, boolean override) {
         if (!override && isSet(propertyName)) {
-            log.info("System property is already set: [%s] = [%s]", propertyName, System.getProperty(propertyName));
+            JamLogger.info("System property is already set: [%s] = [%s]", propertyName, System.getProperty(propertyName));
             return;
         }
 
@@ -771,7 +771,7 @@ public final class JamProperties {
         if (envValue == null)
             throw JamException.runtime("Required environment variable [%s] is not set.", envName);
 
-        log.info("Resolved property [%s] => [%s]", envName, envValue);
+        JamLogger.info("Resolved property [%s] => [%s]", envName, envValue);
         System.setProperty(propertyName, envValue);
     }
 
@@ -786,7 +786,7 @@ public final class JamProperties {
         String requiredName  = parsePropertyReference(propertyValue);
         String requiredValue = getRequired(requiredName);
 
-        log.info("Resolved property [%s] => [%s]", propertyName, requiredValue);
+        JamLogger.info("Resolved property [%s] => [%s]", propertyName, requiredValue);
         System.setProperty(propertyName, requiredValue);
     }
 

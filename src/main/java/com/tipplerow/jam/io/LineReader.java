@@ -27,6 +27,8 @@ import org.apache.commons.io.LineIterator;
 
 /**
  * Provides for {@code Iterable} file reading, line by line.
+ *
+ * @author Scott Shaffer
  */
 public final class LineReader implements Closeable, Iterable<String>, Iterator<String> {
     private final LineIterator iterator;

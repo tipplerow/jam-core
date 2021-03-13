@@ -33,6 +33,8 @@ import java.util.regex.Pattern;
  * <p>A continuation line ends with a backslash character {@code '\'}.
  * All continuation lines will be appended to the previous line (after
  * adding a leading space character).
+ *
+ * @author Scott Shaffer
  */
 public final class DataReader implements Closeable, Iterable<String> {
     private final LineReader reader;

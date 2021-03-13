@@ -25,6 +25,8 @@ import java.util.Set;
  * <p>This list maintains the property names and values <em>in
  * the order of addition</em> so that property values may refer
  * to previously added values.
+ *
+ * @author Scott Shaffer
  */ 
 public final class PropertyList {
     private final Map<String, String> properties =

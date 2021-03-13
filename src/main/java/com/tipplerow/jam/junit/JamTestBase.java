@@ -24,6 +24,8 @@ import static org.junit.Assert.*;
 
 /**
  * Provides a base class for all JUnit tests in the {@code jam} project.
+ *
+ * @author Scott Shaffer
  */
 public abstract class JamTestBase {
     private static final String FILE_PREFIX = "src/test/resources/";
@@ -37,8 +39,8 @@ public abstract class JamTestBase {
      * @param actual   the actual collection.
      */
     public <V> void assertCollection(Collection<V> expected, Collection<V> actual) {
-        Set<V> actualSet = new HashSet<V>(actual);
-        Set<V> expectedSet = new HashSet<V>(expected);
+        Set<V> actualSet = new HashSet<>(actual);
+        Set<V> expectedSet = new HashSet<>(expected);
 
         assertEquals(expectedSet, actualSet);
     }

@@ -21,6 +21,8 @@ import java.util.List;
 
 /**
  * Provides information about the underlying operating system.
+ *
+ * @author Scott Shaffer
  */
 public final class JamSystem {
     private static final String SYSCTL_CORE_COUNT = "machdep.cpu.core_count";
@@ -45,14 +47,14 @@ public final class JamSystem {
      */
     public static int getCoreCount() {
         if (JamEnv.isSet(CORE_COUNT_ENV))
-            return Integer.valueOf(JamEnv.getRequired(CORE_COUNT_ENV));
+            return Integer.parseInt(JamEnv.getRequired(CORE_COUNT_ENV));
 
         List<String> output = ProcessRunner.run("sysctl", "-n", SYSCTL_CORE_COUNT);
 
         if (output.size() != 1)
             throw JamException.runtime("Unexpected result from `sysctl`: [%s].", output);
 
-        return Integer.valueOf(output.get(0));
+        return Integer.parseInt(output.get(0));
     }
 
     /**
@@ -62,14 +64,14 @@ public final class JamSystem {
      */
     public static int getCPUCount() {
         if (JamEnv.isSet(CPU_COUNT_ENV))
-            return Integer.valueOf(JamEnv.getRequired(CPU_COUNT_ENV));
+            return Integer.parseInt(JamEnv.getRequired(CPU_COUNT_ENV));
 
         List<String> output = ProcessRunner.run("sysctl", "-n", SYSCTL_CPU_COUNT);
 
         if (output.size() != 1)
             throw JamException.runtime("Unexpected result from `sysctl`: [%s].", output);
 
-        return Integer.valueOf(output.get(0));
+        return Integer.parseInt(output.get(0));
     }
 
     /**

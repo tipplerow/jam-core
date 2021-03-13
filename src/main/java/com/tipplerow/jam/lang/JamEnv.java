@@ -24,6 +24,8 @@ import java.util.regex.Pattern;
 
 /**
  * Provides utility methods for managing environment variables.
+ *
+ * @author Scott Shaffer
  */
 public final class JamEnv {
     private JamEnv() {}

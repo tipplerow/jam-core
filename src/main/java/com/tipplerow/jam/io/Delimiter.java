@@ -22,6 +22,8 @@ import com.tipplerow.jam.lang.JamException;
 
 /**
  * Encapsulates the form and function of a flat-file delimiter.
+ *
+ * @author Scott Shaffer
  */
 public final class Delimiter {
     private final String delimString;

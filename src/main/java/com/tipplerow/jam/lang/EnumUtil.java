@@ -22,6 +22,8 @@ import java.util.Set;
 
 /**
  * Provides utility methods operating on enums.
+ *
+ * @author Scott Shaffer
  */
 public final class EnumUtil {
     /**

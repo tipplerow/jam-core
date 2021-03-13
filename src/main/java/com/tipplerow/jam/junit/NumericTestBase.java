@@ -22,7 +22,10 @@ import com.tipplerow.jam.math.JamRandom;
 import static org.junit.Assert.*;
 
 /**
- * Provides a base class for all numerical JUnit tests in the {@code jam} project.
+ * Provides a base class for all numerical JUnit tests in the
+ * {@code jam} project.
+ *
+ * @author Scott Shaffer
  */
 public abstract class NumericTestBase extends JamTestBase {
     private final double tolerance;

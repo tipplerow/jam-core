@@ -37,18 +37,18 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 
+import com.tipplerow.jam.app.JamLogger;
 import com.tipplerow.jam.lang.JamException;
 import com.tipplerow.jam.regex.RegexUtil;
-
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Provides utility methods for file I/O operations.
  *
  * <p>All methods wrap checked exceptions ({@code IOException}s) in
  * runtime exceptions.
+ * 
+ * @author Scott Shaffer
  */
-@Slf4j
 public final class IOUtil {
     private IOUtil() {}
 
@@ -63,7 +63,7 @@ public final class IOUtil {
                 closeable.close();
         }
         catch (Exception ex) {
-            log.warn(ex.getMessage());
+            JamLogger.warn(ex.getMessage());
         }
     }
 
@@ -78,7 +78,7 @@ public final class IOUtil {
                 flushable.flush();
         }
         catch (Exception ex) {
-            log.warn(ex.getMessage());
+            JamLogger.warn(ex.getMessage());
         }
     }
 
@@ -96,7 +96,7 @@ public final class IOUtil {
      * the reader reaches the end of the file.
      */
     public static String nextDataLine(BufferedReader reader, Pattern comment) {
-        String line = null;
+        String line;
 
         try {
             while (true) {
@@ -111,8 +111,8 @@ public final class IOUtil {
                     break;
             }
         }
-        catch (IOException ioex) {
-            throw JamException.runtime(ioex);
+        catch (IOException ex) {
+            throw JamException.runtime(ex);
         }
 
         return line;
@@ -141,8 +141,8 @@ public final class IOUtil {
         try {
             return new FileInputStream(file);
         }
-        catch (IOException ioex) {
-            throw JamException.runtime(ioex);
+        catch (IOException ex) {
+            throw JamException.runtime(ex);
         }
     }
 
@@ -169,8 +169,8 @@ public final class IOUtil {
         try {
             return new FileOutputStream(file);
         }
-        catch (IOException ioex) {
-            throw JamException.runtime(ioex);
+        catch (IOException ex) {
+            throw JamException.runtime(ex);
         }
     }
 
@@ -239,8 +239,8 @@ public final class IOUtil {
         try {
             return new BufferedReader(new FileReader(file));
         }
-        catch (IOException ioex) {
-            throw JamException.runtime(ioex);
+        catch (IOException ex) {
+            throw JamException.runtime(ex);
         }
     }
 
@@ -384,8 +384,8 @@ public final class IOUtil {
             FileUtil.ensureParentDirs(file);
             return new PrintWriter(new BufferedWriter(new FileWriter(file, append)));
         }
-        catch (IOException ioex) {
-            throw JamException.runtime(ioex);
+        catch (IOException ex) {
+            throw JamException.runtime(ex);
         }
     }
 
@@ -431,7 +431,7 @@ public final class IOUtil {
      * successfully.
      */
     public static List<String> readLines(BufferedReader reader) {
-        List<String> lines = new ArrayList<String>();
+        List<String> lines = new ArrayList<>();
 
         try {
             for (String line = reader.readLine(); line != null; line = reader.readLine())
@@ -549,7 +549,7 @@ public final class IOUtil {
      * @throws RuntimeException unless the file was written successfully.
      */
     public static <T> void writeObjects(File file, boolean append, Collection<T> objects) {
-        writeObjects(file, append, objects, obj -> obj.toString());
+        writeObjects(file, append, objects, Object::toString);
     }
 
     /**

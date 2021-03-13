@@ -21,9 +21,11 @@ import org.apache.logging.log4j.LogManager;
 /**
  * Manages the logger used by the Jam library and provides a thin layer
  * of logging methods above the underlying logger implementation.
+ *
+ * @author Scott Shaffer
  */
 public final class JamLogger {
-    private static Logger logger = null;
+    private static Logger logger;
 
     private static final String CONFIGURATION_ENV_NAME = "LOG4J_CONF";
     private static final String CONFIGURATION_PROPERTY_NAME = "log4j.configurationFile";
@@ -45,7 +47,7 @@ public final class JamLogger {
             System.out.println("Using default log4j configuration...");
     }
 
-    public enum Level { FATAL, ERROR, WARN, INFO, DEBUG, SILENT };
+    public enum Level { FATAL, ERROR, WARN, INFO, DEBUG, SILENT }
 
     public static void fatal(Object message) {
         logger.fatal(message);

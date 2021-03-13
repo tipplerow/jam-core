@@ -15,21 +15,21 @@
  */
 package com.tipplerow.jam.io;
 
+import com.tipplerow.jam.app.JamLogger;
 import com.tipplerow.jam.lang.JamException;
 import com.tipplerow.jam.regex.RegexUtil;
 
 import java.io.File;
 import java.io.IOException;
 
-import lombok.extern.slf4j.Slf4j;
-
 /**
  * Provides utility methods for operating on files and file names.
  *
  * <p>All methods wrap checked exceptions ({@code IOException}s) in
  * runtime exceptions.
+ *
+ * @author Scott Shaffer
  */
-@Slf4j
 public final class FileUtil {
     private FileUtil() {}
 
@@ -48,7 +48,7 @@ public final class FileUtil {
             boolean success = dir.mkdirs();
 
             if (success) {
-                log.info("Created directory [%s]...", dir.getAbsolutePath());
+                JamLogger.info("Created directory [%s]...", dir.getAbsolutePath());
             }
             else {
                 throw JamException.runtime("Failed to create directory [%s].", dir.getAbsolutePath());
@@ -153,13 +153,13 @@ public final class FileUtil {
      * throws an {@code IOException}.
      */
     public static String getCanonicalPath(File file) {
-        String result = null;
+        String result;
 
         try {
             result = file.getCanonicalPath();
         }
-        catch (IOException ioex) {
-            throw JamException.runtime(ioex);
+        catch (IOException ex) {
+            throw JamException.runtime(ex);
         }
 
         return result;
@@ -194,12 +194,12 @@ public final class FileUtil {
      * or {@code .} (dot) if the file does not specify a parent.
      */
     public static String getDirName(File file) {
-	String result = file.getParent();
+        String result = file.getParent();
 
-	if (result == null)
-	    result = ".";
+        if (result == null)
+            result = ".";
 
-	return result;
+        return result;
     }
 
     /**
@@ -215,7 +215,7 @@ public final class FileUtil {
      * "dot" directory if the file does not specify a parent.
      */
     public static File getParentFile(File file) {
-	return new File(getDirName(file));
+        return new File(getDirName(file));
     }
 
     /**
