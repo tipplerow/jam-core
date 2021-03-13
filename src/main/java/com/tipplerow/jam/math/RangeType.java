@@ -45,7 +45,7 @@ public enum RangeType {
      */
     LEFT_OPEN {
         @Override public DoublePredicate lowerPredicate(double lowerBound) {
-            return ComparisonPredicate.GE(lowerBound);
+            return ComparisonPredicate.GT(lowerBound);
         }
 
         @Override public DoublePredicate upperPredicate(double upperBound) {
