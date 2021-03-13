@@ -27,6 +27,8 @@ import com.tipplerow.jam.io.Delimiter;
 
 /**
  * Provides static utility methods operating on integers.
+ *
+ * @author Scott Shaffer
  */
 public final class IntUtil {
     /**
@@ -68,7 +70,7 @@ public final class IntUtil {
      * @return the integer cube root of the input argument (which must
      * be a perfect integer cube).
      *
-     * @throws IllegalArgumentException unless the input arguent is a
+     * @throws IllegalArgumentException unless the input argument is a
      * perfect integer cube.
      */
     public static int cbrt(int cube) {
@@ -274,7 +276,7 @@ public final class IntUtil {
      */
     public static List<Integer> parseIntList(String string, Delimiter delimiter) {
         String[] fields = delimiter.split(string);
-        List<Integer> elements = new ArrayList<Integer>(fields.length);
+        List<Integer> elements = new ArrayList<>(fields.length);
 
         for (String field : fields)
             elements.add(parseInt(field.trim()));
@@ -364,7 +366,7 @@ public final class IntUtil {
      * @return the integer square root of the input argument (which
      * must be a perfect integer square).
      *
-     * @throws IllegalArgumentException unless the input arguent is a
+     * @throws IllegalArgumentException unless the input argument is a
      * perfect integer square.
      */
     public static int sqrt(int square) {
@@ -404,7 +406,7 @@ public final class IntUtil {
         int[] result = new int[collection.size()];
 
         for (Integer value : collection)
-            result[index++] = value.intValue();
+            result[index++] = value;
 
         return result;
     }
@@ -439,7 +441,7 @@ public final class IntUtil {
         double[] doubles = new double[ints.size()];
 
         for (Integer value : ints)
-            doubles[index++] = value.intValue();
+            doubles[index++] = value;
 
         return doubles;
     }

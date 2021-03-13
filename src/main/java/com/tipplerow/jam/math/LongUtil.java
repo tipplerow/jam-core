@@ -17,6 +17,8 @@ package com.tipplerow.jam.math;
 
 /**
  * Provides static utility methods operating on {@code long} integers.
+ *
+ * @author Scott Shaffer
  */
 public final class LongUtil {
     /**

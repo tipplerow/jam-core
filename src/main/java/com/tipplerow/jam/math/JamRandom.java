@@ -1,4 +1,18 @@
-
+/*
+ * Copyright (C) 2021 Scott Shaffer - All Rights Reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.tipplerow.jam.math;
 
 import java.io.DataInputStream;
@@ -6,10 +20,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+import com.tipplerow.jam.app.JamLogger;
 import com.tipplerow.jam.io.IOUtil;
 import com.tipplerow.jam.lang.JamProperties;
-
-import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.math3.random.RandomGenerator;
 
@@ -23,8 +36,9 @@ import org.apache.commons.math3.random.RandomGenerator;
  * Generators Based on Linear Recurrences Modulo 2, ACM Transactions
  * on Mathematical Software (TOMS), Volume 32 Issue 1, March 2006,
  * Pages 1-16.
+ *
+ * @author Scott Shaffer
  */
-@Slf4j
 public abstract class JamRandom implements RandomGenerator {
     private static JamRandom global = null;
     
@@ -136,7 +150,7 @@ public abstract class JamRandom implements RandomGenerator {
                 result = stream.readLong();
             }
             catch (IOException ioex) {
-                log.warn("Failed to read [%s]; using system time.", DEV_URANDOM);
+                JamLogger.warn("Failed to read [%s]; using system time.", DEV_URANDOM);
             }
             finally {
                 IOUtil.close(stream);

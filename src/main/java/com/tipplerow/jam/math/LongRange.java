@@ -22,6 +22,8 @@ import java.util.Iterator;
 
 /**
  * Represents a closed contiguous range of {@code long} values.
+ *
+ * @author Scott Shaffer
  */
 public final class LongRange implements Iterable<Long> {
     private final long lower;

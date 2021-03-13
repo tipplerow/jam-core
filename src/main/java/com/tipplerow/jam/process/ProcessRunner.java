@@ -24,6 +24,8 @@ import java.util.List;
 
 /**
  * Runs command-line processes.
+ *
+ * @author Scott Shaffer
  */
 public final class ProcessRunner {
     /**

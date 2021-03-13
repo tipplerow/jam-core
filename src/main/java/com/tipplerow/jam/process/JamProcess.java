@@ -20,15 +20,15 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
+import com.tipplerow.jam.app.JamLogger;
 import com.tipplerow.jam.io.IOUtil;
 import com.tipplerow.jam.lang.JamException;
 
-import lombok.extern.slf4j.Slf4j;
-
 /**
  * Executes a command-line process and stores the results.
+ *
+ * @author Scott Shaffer
  */
-@Slf4j
 public final class JamProcess {
     private final ProcessBuilder builder;
 
@@ -110,7 +110,7 @@ public final class JamProcess {
 
     /**
      * Runs the process and logs console error messages.  Console
-     * output to the {@code stdout} stream is availble by calling
+     * output to the {@code stdout} stream is available by calling
      * the {@code stdout()} method.
      *
      * @return the best guess as to the success or failure of the
@@ -118,7 +118,7 @@ public final class JamProcess {
      * {@code stderr} stream).
      */
     public boolean run() {
-        log.info("Running system command: %s", builder.command());
+        JamLogger.info("Running system command: %s", builder.command());
 
         try {
             process = builder.start();
@@ -130,7 +130,7 @@ public final class JamProcess {
             stderr = IOUtil.readLines(stderrReader);
 
             for (String error : stderr)
-                log.error(error);
+                JamLogger.error(error);
         }
         catch (IOException ex) {
             throw JamException.runtime(ex);

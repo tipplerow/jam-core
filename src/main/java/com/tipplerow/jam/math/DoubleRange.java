@@ -22,6 +22,8 @@ import java.util.function.DoublePredicate;
 /**
  * Represents an interval on the real number line with some finite
  * tolerance for imprecision in floating-point comparisons.
+ *
+ * @author Scott Shaffer
  */
 public final class DoubleRange {
     private final double lowerBound;

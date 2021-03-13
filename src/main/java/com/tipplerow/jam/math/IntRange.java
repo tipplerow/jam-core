@@ -23,6 +23,8 @@ import java.util.Iterator;
 
 /**
  * Represents a closed contiguous range of integer values.
+ *
+ * @author Scott Shaffer
  */
 public final class IntRange implements Iterable<Integer> {
     private final int lower;

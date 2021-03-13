@@ -24,6 +24,8 @@ import java.util.regex.Pattern;
 /**
  * Defines several common regular expressions and implements standard
  * parsing routines.
+ *
+ * @author Scott Shaffer
  */
 public final class RegexUtil {
     private RegexUtil() {}
@@ -39,7 +41,7 @@ public final class RegexUtil {
     public static final Pattern COLON = Pattern.compile(":");
 
     /**
-     * Matches the closing parethesis marker.
+     * Matches the closing parenthesis marker.
      */
     public static final Pattern CLOSE_PAREN = Pattern.compile("\\)");
 
@@ -69,7 +71,7 @@ public final class RegexUtil {
     public static final Pattern MULTI_WHITE_SPACE = Pattern.compile("\\s+");
 
     /**
-     * Matches the opening parethesis marker.
+     * Matches the opening parenthesis marker.
      */
     public static final Pattern OPEN_PAREN = Pattern.compile("\\(");
 
@@ -255,7 +257,7 @@ public final class RegexUtil {
      *
      * @param string the delimited string.
      *
-     * @return an array containing all delimted fields, stripped of
+     * @return an array containing all delimited fields, stripped of
      * leading and trailing white space.
      */
     public static String[] split(Pattern pattern, String string) {
@@ -280,7 +282,7 @@ public final class RegexUtil {
      *
      * @param count the expected number of fields.
      *
-     * @return an array containing all delimted fields, stripped of
+     * @return an array containing all delimited fields, stripped of
      * leading and trailing white space.
      *
      * @throws IllegalArgumentException unless the number of fields
@@ -303,11 +305,11 @@ public final class RegexUtil {
      *
      * @param strings the delimited strings.
      *
-     * @return a list of arrays containing all delimted fields,
+     * @return a list of arrays containing all delimited fields,
      * stripped of leading and trailing white space.
      */
     public static List<String[]> split(Pattern pattern, List<String> strings) {
-        List<String[]> fields = new ArrayList<String[]>(strings.size());
+        List<String[]> fields = new ArrayList<>(strings.size());
 
         for (String string : strings)
             fields.add(split(pattern, string));
@@ -326,14 +328,14 @@ public final class RegexUtil {
      *
      * @param count the expected number of fields.
      *
-     * @return a list of arrays containing all delimted fields,
+     * @return a list of arrays containing all delimited fields,
      * stripped of leading and trailing white space.
      *
      * @throws IllegalArgumentException unless the number of fields
      * matches the expected value for all input strings.
      */
     public static List<String[]> split(Pattern pattern, List<String> strings, int count) {
-        List<String[]> fields = new ArrayList<String[]>(strings.size());
+        List<String[]> fields = new ArrayList<>(strings.size());
 
         for (String string : strings)
             fields.add(split(pattern, string, count));
