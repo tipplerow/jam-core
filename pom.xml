@@ -10,6 +10,15 @@
   <description>A core Java library for open-source scientific computing</description>
   <url>https://github.com/tipplerow</url>
 
+  <developers>
+    <developer>
+      <id>scott@tipplerow.com</id>
+      <name>Scott Shaffer</name>
+      <email>scott@tipplerow.com</email>
+      <timezone>America/Los_Angeles</timezone>
+    </developer>
+  </developers>
+
   <licenses>
     <license>
       <name>Apache License 2.0</name>
@@ -17,13 +26,18 @@
     </license>
   </licenses>
 
-
   <properties>
     <jdk.version>11</jdk.version>
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
+
+  <scm>
+    <url>https://github.com/tipplerow/jam-core.git</url>
+    <connection>scm:git:https://github.com/tipplerow/jam-core.git</connection>
+    <tag>HEAD</tag>
+  </scm>
 
   <dependencies>
     <dependency>

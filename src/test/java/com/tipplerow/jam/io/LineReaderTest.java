@@ -16,33 +16,26 @@
 package com.tipplerow.jam.io;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.regex.Pattern;
 
 import org.junit.*;
 import static org.junit.Assert.*;
 
-public final class DataReaderTest extends IOTestBase {
-    private static final Pattern comment = Pattern.compile("#");
+public class LineReaderTest extends IOTestBase {
+    @Test public void testIterator() {
+        ArrayList<String> lines = new ArrayList<>();
+        LineReader reader = LineReader.open(lines123);
 
-    private void assertLines(File file, List<String> expected) {
-        assertEquals(expected, DataReader.read(file, comment));
+        for (String line : reader)
+            lines.add(line);
+
+        reader.close();
+        assertEquals(Arrays.asList("line 1", "line 2", "line 3"), lines);
     }
 
-    @Test
-    public void testContinuation() {
-        assertLines(continuation, Arrays.asList("line 1", "line 2", "line 3", "abc def ghi"));
-    }
-
-    @Test
-    public void testIterator() {
-        assertLines(comments123, Arrays.asList("line 1", "line 2", "line 3"));
-    }
-
-    @Test
-    public void testNext() {
-        DataReader reader = DataReader.open(comments123, comment);
+    @Test public void testNext() {
+        LineReader reader = LineReader.open(lines123);
 
         assertEquals("line 1", reader.next());
         assertEquals("line 2", reader.next());

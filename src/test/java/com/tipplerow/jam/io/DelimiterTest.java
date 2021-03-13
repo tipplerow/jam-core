@@ -15,12 +15,10 @@
  */
 package com.tipplerow.jam.io;
 
-import com.tipplerow.jam.junit.JamTestBase;
-
 import org.junit.*;
 import static org.junit.Assert.*;
 
-public final class DelimiterTest extends JamTestBase {
+public final class DelimiterTest extends IOTestBase {
     private void runOne(Delimiter delim, String line, String... fields) {
         assertEquals(line, delim.join(fields));
         assertArrayEquals(fields, delim.split(line));
