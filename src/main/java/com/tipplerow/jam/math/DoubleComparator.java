@@ -153,6 +153,28 @@ public final class DoubleComparator implements Comparator<Double> {
         return compare(x, y) == 0;
     }
 
+    public boolean equals(double[] x, double[] y) {
+        if (x.length != y.length)
+            return false;
+
+        for (int index = 0; index < x.length; ++index)
+            if (!equals(x[index], y[index]))
+                return false;
+
+        return true;
+    }
+
+    public boolean equals(double[][] x, double[][] y) {
+        if (x.length != y.length)
+            return false;
+
+        for (int row = 0; row < x.length; ++row)
+            if (!equals(x[row], y[row]))
+                return false;
+
+        return true;
+    }
+
     public boolean isUnity(double x) {
         return !Double.isNaN(x) && compare(x, 1.0) == 0;
     }
