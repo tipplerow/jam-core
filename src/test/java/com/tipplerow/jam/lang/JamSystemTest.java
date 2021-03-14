@@ -15,10 +15,10 @@
  */
 package com.tipplerow.jam.lang;
 
-import com.tipplerow.jam.junit.JamTestBase;
+import com.tipplerow.jam.testng.JamTestBase;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 public class JamSystemTest extends JamTestBase {
     @Test public void testCoreCount() {

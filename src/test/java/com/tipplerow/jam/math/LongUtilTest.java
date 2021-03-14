@@ -15,10 +15,10 @@
  */
 package com.tipplerow.jam.math;
 
-import com.tipplerow.jam.junit.NumericTestBase;
+import com.tipplerow.jam.testng.NumericTestBase;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 public class LongUtilTest extends NumericTestBase {
     @Test public void testIntValue() {
@@ -29,12 +29,12 @@ public class LongUtilTest extends NumericTestBase {
         assertEquals( 2147483647, LongUtil.intValue( (1L << 31) - 1L));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void testIntValueInvalid1() {
         LongUtil.intValue(-(1L << 33L));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void testIntValueInvalid2() {
         LongUtil.intValue(1L << 33L);
     }
@@ -47,12 +47,12 @@ public class LongUtilTest extends NumericTestBase {
         assertEquals(1000000000000L, LongUtil.parseLong("1E12"));
     }
 
-    @Test(expected = NumberFormatException.class)
+    @Test(expectedExceptions = NumberFormatException.class)
     public void testParseLongInvalid1() {
         LongUtil.parseLong("1.234");
     }
 
-    @Test(expected = NumberFormatException.class)
+    @Test(expectedExceptions = NumberFormatException.class)
     public void testParseLongInvalid2() {
         LongUtil.parseLong("1.234E2");
     }

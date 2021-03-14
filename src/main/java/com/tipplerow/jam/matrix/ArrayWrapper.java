@@ -13,12 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tipplerow.jam.vector;
+package com.tipplerow.jam.matrix;
 
 import lombok.NonNull;
-
-import java.util.Arrays;
-import java.util.stream.DoubleStream;
 
 /**
  * Provides an implementation of the JamVector interface using an existing
@@ -26,11 +23,11 @@ import java.util.stream.DoubleStream;
  *
  * @author Scott Shaffer
  */
-final class ArrayWrapper implements VectorView {
+final class ArrayWrapper implements MatrixView {
     @NonNull
-    private final double[] array;
+    private final double[][] array;
 
-    private ArrayWrapper(double[] array) {
+    private ArrayWrapper(double[][] array) {
         this.array = array;
     }
 
@@ -41,27 +38,22 @@ final class ArrayWrapper implements VectorView {
      *
      * @return a new wrapper for the specified array.
      */
-    public static ArrayWrapper wrap(double[] array) {
+    public static ArrayWrapper wrap(double[][] array) {
         return new ArrayWrapper(array);
     }
 
     @Override
-    public double get(int index) {
-        return array[index];
+    public double get(int row, int col) {
+        return array[row][col];
     }
 
     @Override
-    public int length() {
+    public int ncol() {
+        return array.length > 0 ? array[0].length : 0;
+    }
+
+    @Override
+    public int nrow() {
         return array.length;
-    }
-
-    @Override
-    public DoubleStream streamValues() {
-        return Arrays.stream(array);
-    }
-
-    @Override
-    public double[] toArray() {
-        return Arrays.copyOf(array, length());
     }
 }

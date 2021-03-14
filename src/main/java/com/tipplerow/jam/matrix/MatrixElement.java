@@ -13,39 +13,50 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tipplerow.jam.vector;
+package com.tipplerow.jam.matrix;
 
 import com.tipplerow.jam.math.DoubleElement;
 
 import lombok.Getter;
 
 /**
- * Encapsulates the index and value from a single vector element.
+ * Encapsulates the indexes and value from a single matrix element.
  *
  * @author Scott Shaffer
  */
-public final class VectorElement extends DoubleElement {
+public final class MatrixElement extends DoubleElement {
     /**
-     * The zero-based index of this element.
+     * The zero-based row index of this element.
      */
     @Getter
-    private final int index;
+    private final int row;
 
-    private VectorElement(int index, double value) {
+    /**
+     * The zero-based column index of this element.
+     */
+    @Getter
+    private final int col;
+
+    private MatrixElement(int row, int col, double value) {
         super(value);
-        this.index = index;
-        validateIndex(index);
+
+        this.row = row;
+        this.col = col;
+
+        validateIndex(row);
+        validateIndex(col);
     }
 
     /**
-     * Creates a new immutable vector element.
+     * Creates a new immutable matrix element.
      *
-     * @param index the zero-offset element index.
+     * @param row   the zero-offset row index.
+     * @param col   the zero-offset column index.
      * @param value the element value.
      *
-     * @return a new vector element with the specified contents.
+     * @return a new matrix element with the specified contents.
      */
-    public static VectorElement of(int index, double value) {
-        return new VectorElement(index, value);
+    public static MatrixElement of(int row, int col, double value) {
+        return new MatrixElement(row, col, value);
     }
 }

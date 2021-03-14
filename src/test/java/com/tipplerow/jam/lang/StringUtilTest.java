@@ -18,11 +18,11 @@ package com.tipplerow.jam.lang;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import com.tipplerow.jam.junit.JamTestBase;
 import com.tipplerow.jam.regex.RegexUtil;
+import com.tipplerow.jam.testng.JamTestBase;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 public class StringUtilTest extends JamTestBase {
     @Test public void testBackslash() {
@@ -35,7 +35,7 @@ public class StringUtilTest extends JamTestBase {
         assertEquals("", StringUtil.chop("c"));
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test(expectedExceptions = RuntimeException.class)
     public void testChopEmpty() {
         StringUtil.chop("");
     }

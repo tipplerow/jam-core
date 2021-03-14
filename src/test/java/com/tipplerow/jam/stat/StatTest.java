@@ -15,10 +15,10 @@
  */
 package com.tipplerow.jam.stat;
 
-import com.tipplerow.jam.junit.NumericTestBase;
+import com.tipplerow.jam.testng.NumericTestBase;
 import com.tipplerow.jam.vector.VectorView;
 
-import org.junit.Test;
+import org.testng.annotations.Test;
 
 /**
  * Provides a base class for tests in the {@code stat} package.

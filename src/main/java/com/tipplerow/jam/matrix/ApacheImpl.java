@@ -13,26 +13,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tipplerow.jam.vector;
+package com.tipplerow.jam.matrix;
 
-import com.tipplerow.jam.testng.NumericTestBase;
-
-import static org.testng.Assert.*;
+import org.apache.commons.math3.linear.RealMatrix;
 
 /**
  * @author Scott Shaffer
  */
-public class VectorTestBase extends NumericTestBase {
-    public static final double[] array1 =
-            new double[] { 0.0, 1.0, 2.0, Double.NaN, 4.0, Double.POSITIVE_INFINITY };
+abstract class ApacheImpl extends MatrixImpl {
+    protected final RealMatrix matrix;
 
-    public static final VectorView arrayView1 = VectorView.of(array1);
-
-    public void assertVector(double[] actual, double... expected) {
-        assertTrue(VectorView.of(actual).equalsVector(VectorView.of(expected)));
+    ApacheImpl(RealMatrix matrix) {
+        this.matrix = matrix;
     }
 
-    public void assertVector(VectorView actual, double... expected) {
-        assertTrue(actual.equalsVector(VectorView.of(expected)));
+    @Override
+    double get(int row, int col) {
+        return matrix.getEntry(row, col);
+    }
+
+    @Override
+    int ncol() {
+        return matrix.getColumnDimension();
+    }
+
+    @Override
+    int nrow() {
+        return matrix.getRowDimension();
+    }
+
+    @Override
+    double[][] toArray() {
+        return matrix.getData();
     }
 }

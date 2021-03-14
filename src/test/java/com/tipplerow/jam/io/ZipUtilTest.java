@@ -20,8 +20,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 public final class ZipUtilTest extends IOTestBase {
     @Test public void testReaderWriter() throws IOException {

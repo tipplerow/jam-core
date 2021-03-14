@@ -18,10 +18,10 @@ package com.tipplerow.jam.lang;
 import java.util.List;
 import java.util.Set;
 
-import com.tipplerow.jam.junit.JamTestBase;
+import com.tipplerow.jam.testng.JamTestBase;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 public class EnumUtilTest extends JamTestBase {
     public enum ABC { A, B, C }
@@ -49,12 +49,12 @@ public class EnumUtilTest extends JamTestBase {
         assertEquals(ABC.C, EnumUtil.valueOf(ABC.class, "C"));
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test(expectedExceptions = RuntimeException.class)
     public void testValueOfInvalid() {
         EnumUtil.valueOf(ABC.class, "FOO");
     }
 
     @Test public void testValues() {
-        assertArrayEquals(ABC.values(), EnumUtil.values(ABC.class));
+        assertEquals(ABC.values(), EnumUtil.values(ABC.class));
     }
 }

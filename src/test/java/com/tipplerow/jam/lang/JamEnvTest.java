@@ -15,10 +15,10 @@
  */
 package com.tipplerow.jam.lang;
 
-import com.tipplerow.jam.junit.JamTestBase;
+import com.tipplerow.jam.testng.JamTestBase;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 public class JamEnvTest extends JamTestBase {
     @Test public void testIsSet() {
@@ -39,7 +39,7 @@ public class JamEnvTest extends JamTestBase {
         assertEquals("foo/" + user + "/xyz/" + shell, JamEnv.replaceVariable("foo/${USER}/xyz/${SHELL}"));
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test(expectedExceptions = RuntimeException.class)
     public void testReplaceUnset() {
         JamEnv.replaceVariable("${__NOSUCHVAR__}");
     }

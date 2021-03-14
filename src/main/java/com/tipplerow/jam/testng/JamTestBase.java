@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tipplerow.jam.junit;
+package com.tipplerow.jam.testng;
 
 import java.io.File;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.Assert.*;
+import static org.testng.Assert.*;
 
 /**
  * Provides a base class for all JUnit tests in the {@code jam} project.
@@ -35,14 +35,14 @@ public abstract class JamTestBase {
      * their iteration order.
      *
      * @param <V>      the runtime type to compare.
-     * @param expected the expected collection.
      * @param actual   the actual collection.
+     * @param expected the expected collection.
      */
-    public <V> void assertCollection(Collection<V> expected, Collection<V> actual) {
+    public <V> void assertCollection(Collection<V> actual, Collection<V> expected) {
         Set<V> actualSet = new HashSet<>(actual);
         Set<V> expectedSet = new HashSet<>(expected);
 
-        assertEquals(expectedSet, actualSet);
+        assertEquals(actualSet, expectedSet);
     }
 
     /**

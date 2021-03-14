@@ -15,10 +15,10 @@
  */
 package com.tipplerow.jam.math;
 
-import com.tipplerow.jam.junit.NumericTestBase;
+import com.tipplerow.jam.testng.NumericTestBase;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 public class RangeTypeTest extends NumericTestBase {
     @Test public void testFormat() {
@@ -35,12 +35,12 @@ public class RangeTypeTest extends NumericTestBase {
         assertEquals(RangeType.CLOSED,      RangeType.parse("[1.0, 2.0]"));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void testParseBad1() {
         RangeType.parse("{1, 2)");
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void testParseBad2() {
         RangeType.parse("[1, 2}");
     }

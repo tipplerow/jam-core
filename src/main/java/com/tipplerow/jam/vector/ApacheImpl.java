@@ -15,29 +15,30 @@
  */
 package com.tipplerow.jam.vector;
 
-import org.testng.annotations.Test;
-import static org.testng.Assert.*;
+import org.apache.commons.math3.linear.RealVector;
 
 /**
  * @author Scott Shaffer
  */
-public class VectorViewTest extends VectorTestBase {
-    @Test
-    public void testWrap() {
-        double[] array = new double[] { 0.0, 1.0, 2.0 };
-        VectorView view = VectorView.of(array);
+abstract class ApacheImpl extends VectorImpl {
+    protected final RealVector vector;
 
-        assertEquals(3, view.length());
-        assertDouble(0.0, view.get(0));
-        assertDouble(1.0, view.get(1));
-        assertDouble(2.0, view.get(2));
+    ApacheImpl(RealVector vector) {
+        this.vector = vector;
+    }
 
-        array[0] = 10.0;
-        array[1] = 20.0;
-        array[2] = 30.0;
+    @Override
+    double get(int index) {
+        return vector.getEntry(index);
+    }
 
-        assertDouble(10.0, view.get(0));
-        assertDouble(20.0, view.get(1));
-        assertDouble(30.0, view.get(2));
+    @Override
+    int length() {
+        return vector.getDimension();
+    }
+
+    @Override
+    double[] toArray() {
+        return vector.toArray();
     }
 }

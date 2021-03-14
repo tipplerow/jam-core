@@ -13,14 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tipplerow.jam.io;
+package com.tipplerow.jam.matrix;
 
-import java.io.File;
+/**
+ * @author Scott Shaffer
+ */
+abstract class MatrixImpl {
+    abstract int ncol();
+    abstract int nrow();
+    abstract double get(int row, int col);
+    abstract boolean isDense();
+    abstract MatrixImpl set(int row, int col, double value);
+    abstract double[][] toArray();
 
-import com.tipplerow.jam.testng.JamTestBase;
-
-public abstract class IOTestBase extends JamTestBase {
-    public final File lines123 = resolveFile("io/lines123.txt");
-    public final File comments123 = resolveFile("io/comments123.txt");
-    public final File continuation = resolveFile("io/continuation.txt");
+    final boolean isSparse() {
+        return !isDense();
+    }
 }

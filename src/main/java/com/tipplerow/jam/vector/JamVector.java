@@ -44,7 +44,7 @@ public final class JamVector implements VectorView {
      * of the input array.
      */
     public static JamVector copyOf(double... array) {
-        return new JamVector(new DenseImpl(new ArrayRealVector(array)));
+        return new JamVector(new DenseApacheImpl(new ArrayRealVector(array)));
     }
 
     /**
@@ -73,7 +73,7 @@ public final class JamVector implements VectorView {
      * @throws RuntimeException if the length is negative.
      */
     public static JamVector rep(double value, int length) {
-        return new JamVector(new DenseImpl(new ArrayRealVector(length, value)));
+        return new JamVector(new DenseApacheImpl(new ArrayRealVector(length, value)));
     }
 
     /**
@@ -86,7 +86,7 @@ public final class JamVector implements VectorView {
      * @return a new vector using the specified array as the underlying storage.
      */
     public static JamVector wrap(double[] array) {
-        return new JamVector(new DenseImpl(new ArrayRealVector(array, false)));
+        return new JamVector(new DenseApacheImpl(new ArrayRealVector(array, false)));
     }
 
     /**

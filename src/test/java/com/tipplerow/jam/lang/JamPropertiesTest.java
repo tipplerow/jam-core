@@ -19,12 +19,12 @@ import java.io.File;
 import java.util.Map;
 import java.util.Set;
 
-import com.tipplerow.jam.junit.JamTestBase;
 import com.tipplerow.jam.math.DoubleRange;
 import com.tipplerow.jam.math.IntRange;
+import com.tipplerow.jam.testng.JamTestBase;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 public class JamPropertiesTest extends JamTestBase {
     private final File testProp = resolveFile("lang/test.properties");
@@ -99,7 +99,7 @@ public class JamPropertiesTest extends JamTestBase {
         JamProperties.getRequired("jam.int.good");
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test(expectedExceptions = RuntimeException.class)
     public void testRequiredMissing() {
         JamProperties.getRequired("no_such_property");
     }
@@ -129,12 +129,12 @@ public class JamPropertiesTest extends JamTestBase {
         assertEquals(123.456, JamProperties.getRequiredDouble("jam.double.good", DoubleRange.closed(123.0, 124.0)), 0.001);
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test(expectedExceptions = RuntimeException.class)
     public void testDoubleInvalidFormat() {
         JamProperties.getRequiredDouble("jam.double.bad");
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test(expectedExceptions = RuntimeException.class)
     public void testDoubleOutOfRange() {
         JamProperties.getRequiredDouble("jam.double.good", DoubleRange.closed(0.0, 1.0));
     }
@@ -144,7 +144,7 @@ public class JamPropertiesTest extends JamTestBase {
         assertEquals(FOO.ABC, JamProperties.getOptionalEnum("no_such_prop", FOO.ABC));
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test(expectedExceptions = RuntimeException.class)
     public void testEnumMismatch() {
         assertEquals(FOO.GHI, JamProperties.getRequiredEnum("jam.enum.xyz", FOO.class));
     }
@@ -159,12 +159,12 @@ public class JamPropertiesTest extends JamTestBase {
         assertEquals(123, JamProperties.getRequiredInt("jam.int.good", IntRange.POSITIVE));
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test(expectedExceptions = RuntimeException.class)
     public void testIntInvalidFormat() {
         JamProperties.getRequiredInt("jam.int.bad");
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test(expectedExceptions = RuntimeException.class)
     public void testIntOutOfRange() {
         JamProperties.getRequiredInt("jam.int.good", IntRange.NEGATIVE);
     }

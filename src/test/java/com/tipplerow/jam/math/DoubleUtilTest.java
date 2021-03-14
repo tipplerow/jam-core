@@ -15,12 +15,12 @@
  */
 package com.tipplerow.jam.math;
 
-import com.tipplerow.jam.junit.NumericTestBase;
-
 import java.util.ArrayList;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import com.tipplerow.jam.testng.NumericTestBase;
+
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 public class DoubleUtilTest extends NumericTestBase {
     @Test public void testConstants() {

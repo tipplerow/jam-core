@@ -17,8 +17,8 @@ package com.tipplerow.jam.io;
 
 import java.io.File;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 public class FileUtilTest extends IOTestBase {
     @Test public void testEnsureDir() {
@@ -94,7 +94,7 @@ public class FileUtilTest extends IOTestBase {
         FileUtil.requireFile(System.getProperty("user.home"));
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test(expectedExceptions = RuntimeException.class)
     public void testRequireNotFound() {
         FileUtil.requireFile("no such file");
     }

@@ -15,7 +15,8 @@
  */
 package com.tipplerow.jam.vector;
 
-import org.junit.Test;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 /**
  * @author Scott Shaffer
@@ -26,15 +27,15 @@ public class JamVectorTest extends VectorTestBase {
         double[] array = new double[] { 0.0, 1.0, 2.0 };
         JamVector vector = JamVector.copyOf(array);
 
-        assertEquals(array, 0.0, 1.0, 2.0);
-        assertEquals(vector, 0.0, 1.0, 2.0);
+        assertVector(array, 0.0, 1.0, 2.0);
+        assertVector(vector, 0.0, 1.0, 2.0);
 
         // Ensure that changes are not propagated...
         array[0] = 10.0;
         vector.set(1, 11.0);
 
-        assertEquals(array, 10.0, 1.0, 2.0);
-        assertEquals(vector, 0.0, 11.0, 2.0);
+        assertVector(array, 10.0, 1.0, 2.0);
+        assertVector(vector, 0.0, 11.0, 2.0);
     }
 
     @Test
@@ -42,14 +43,14 @@ public class JamVectorTest extends VectorTestBase {
         double[] array = new double[] { 0.0, 1.0, 2.0 };
         JamVector vector = JamVector.wrap(array);
 
-        assertEquals(array, 0.0, 1.0, 2.0);
-        assertEquals(vector, 0.0, 1.0, 2.0);
+        assertVector(array, 0.0, 1.0, 2.0);
+        assertVector(vector, 0.0, 1.0, 2.0);
 
         // Ensure that changes are propagated...
         array[0] = 10.0;
         vector.set(1, 11.0);
 
-        assertEquals(array, 10.0, 11.0, 2.0);
-        assertEquals(vector, 10.0, 11.0, 2.0);
+        assertVector(array, 10.0, 11.0, 2.0);
+        assertVector(vector, 10.0, 11.0, 2.0);
     }
 }

@@ -20,14 +20,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 public final class DataReaderTest extends IOTestBase {
     private static final Pattern comment = Pattern.compile("#");
 
     private void assertLines(File file, List<String> expected) {
-        assertEquals(expected, DataReader.read(file, comment));
+        assertEquals(DataReader.read(file, comment), expected);
     }
 
     @Test
@@ -44,9 +44,9 @@ public final class DataReaderTest extends IOTestBase {
     public void testNext() {
         DataReader reader = DataReader.open(comments123, comment);
 
-        assertEquals("line 1", reader.next());
-        assertEquals("line 2", reader.next());
-        assertEquals("line 3", reader.next());
+        assertEquals(reader.next(), "line 1");
+        assertEquals(reader.next(), "line 2");
+        assertEquals(reader.next(), "line 3");
         assertFalse(reader.hasNext());
 
         reader.close();

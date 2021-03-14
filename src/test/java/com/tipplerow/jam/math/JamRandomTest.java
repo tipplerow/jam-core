@@ -17,8 +17,8 @@ package com.tipplerow.jam.math;
 
 import com.google.common.collect.HashMultiset;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 public class JamRandomTest {
     private static final JamRandom SOURCE = JamRandom.generator(20071202);

@@ -15,10 +15,10 @@
  */
 package com.tipplerow.jam.math;
 
-import com.tipplerow.jam.junit.NumericTestBase;
+import com.tipplerow.jam.testng.NumericTestBase;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 public class DoubleComparatorTest extends NumericTestBase {
     @Test public void testCompare() {

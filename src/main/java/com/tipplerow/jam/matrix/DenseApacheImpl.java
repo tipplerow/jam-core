@@ -13,23 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tipplerow.jam.vector;
+package com.tipplerow.jam.matrix;
 
-import org.apache.commons.math3.linear.ArrayRealVector;
+import org.apache.commons.math3.linear.Array2DRowRealMatrix;
+import org.apache.commons.math3.linear.BlockRealMatrix;
 
 /**
  * @author Scott Shaffer
  */
-final class DenseImpl extends VectorImpl {
-    private final ArrayRealVector vector;
-
-    DenseImpl(ArrayRealVector vector) {
-        this.vector = vector;
+class DenseApacheImpl extends ApacheImpl {
+    DenseApacheImpl(Array2DRowRealMatrix matrix) {
+        super(matrix);
     }
 
-    @Override
-    double get(int index) {
-        return vector.getEntry(index);
+    DenseApacheImpl(BlockRealMatrix matrix) {
+        super(matrix);
     }
 
     @Override
@@ -38,18 +36,8 @@ final class DenseImpl extends VectorImpl {
     }
 
     @Override
-    int length() {
-        return vector.getDimension();
-    }
-
-    @Override
-    VectorImpl set(int index, double value) {
-        vector.setEntry(index, value);
+    MatrixImpl set(int row, int col, double value) {
+        matrix.setEntry(row, col, value);
         return this;
-    }
-
-    @Override
-    double[] toArray() {
-        return vector.toArray();
     }
 }

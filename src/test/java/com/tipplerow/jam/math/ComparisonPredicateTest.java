@@ -17,10 +17,10 @@ package com.tipplerow.jam.math;
 
 import java.util.function.DoublePredicate;
 
-import com.tipplerow.jam.junit.NumericTestBase;
+import com.tipplerow.jam.testng.NumericTestBase;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 public class ComparisonPredicateTest extends NumericTestBase {
     private static final double BOUND = 10.0;

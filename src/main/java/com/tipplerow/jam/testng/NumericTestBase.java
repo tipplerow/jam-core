@@ -13,13 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tipplerow.jam.junit;
+package com.tipplerow.jam.testng;
 
 import java.util.List;
 
+import com.tipplerow.jam.math.DoubleComparator;
 import com.tipplerow.jam.math.JamRandom;
 
-import static org.junit.Assert.*;
+import static org.testng.Assert.*;
 
 /**
  * Provides a base class for all numerical JUnit tests in the
@@ -29,6 +30,8 @@ import static org.junit.Assert.*;
  */
 public abstract class NumericTestBase extends JamTestBase {
     private final double tolerance;
+    private final DoubleComparator comparator;
+
     private JamRandom random = null;
 
     private static final long SEED = 19410711;
@@ -41,21 +44,22 @@ public abstract class NumericTestBase extends JamTestBase {
 
     protected NumericTestBase(double tolerance) {
         this.tolerance = tolerance;
+        this.comparator = new DoubleComparator(tolerance);
     }
 
-    public void assertDouble(double expected, double actual) {
-        assertEquals(expected, actual, tolerance);
+    public void assertDouble(double actual, double expected) {
+        assertEquals(actual, expected, tolerance);
     }
-/*
-    public void assertDouble(double[] expected, double[] actual) {
-        assertTrue(VectorUtil.equals(expected, actual, tolerance));
+
+    public void assertDouble(double[] actual, double[] expected) {
+        assertTrue(comparator.equals(actual, expected));
     }
-*/
-    public void assertDouble(List<Double> expected, List<Double> actual) {
-        assertEquals(expected.size(), actual.size());
+
+    public void assertDouble(List<Double> actual, List<Double> expected) {
+        assertEquals(actual.size(), expected.size());
 
         for (int index = 0; index < expected.size(); ++index)
-            assertDouble(expected.get(index), actual.get(index));
+            assertDouble(actual.get(index), expected.get(index));
     }
 
     public JamRandom random() {
@@ -64,9 +68,4 @@ public abstract class NumericTestBase extends JamTestBase {
 
         return random;
     }
-/*
-    public RandomSequence uniform() {
-        return RandomSequence.uniform(random());
-    }
- */
 }

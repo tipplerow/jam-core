@@ -15,29 +15,24 @@
  */
 package com.tipplerow.jam.vector;
 
-import org.testng.annotations.Test;
-import static org.testng.Assert.*;
+import org.apache.commons.math3.linear.ArrayRealVector;
 
 /**
  * @author Scott Shaffer
  */
-public class VectorViewTest extends VectorTestBase {
-    @Test
-    public void testWrap() {
-        double[] array = new double[] { 0.0, 1.0, 2.0 };
-        VectorView view = VectorView.of(array);
+final class DenseApacheImpl extends ApacheImpl {
+    DenseApacheImpl(ArrayRealVector vector) {
+        super(vector);
+    }
 
-        assertEquals(3, view.length());
-        assertDouble(0.0, view.get(0));
-        assertDouble(1.0, view.get(1));
-        assertDouble(2.0, view.get(2));
+    @Override
+    boolean isDense() {
+        return true;
+    }
 
-        array[0] = 10.0;
-        array[1] = 20.0;
-        array[2] = 30.0;
-
-        assertDouble(10.0, view.get(0));
-        assertDouble(20.0, view.get(1));
-        assertDouble(30.0, view.get(2));
+    @Override
+    VectorImpl set(int index, double value) {
+        vector.setEntry(index, value);
+        return this;
     }
 }

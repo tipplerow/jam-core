@@ -15,17 +15,17 @@
  */
 package com.tipplerow.jam.io;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 public final class DelimiterTest extends IOTestBase {
     private void runOne(Delimiter delim, String line, String... fields) {
-        assertEquals(line, delim.join(fields));
-        assertArrayEquals(fields, delim.split(line));
+        assertEquals(delim.join(fields), line);
+        assertEquals(delim.split(line), fields);
     }
 
     private void testSplit(Delimiter delim, String line, String... expected) {
-        assertArrayEquals(expected, delim.split(line));
+        assertEquals(delim.split(line), expected);
     }
 
     @Test public void testComma() {
@@ -50,7 +50,7 @@ public final class DelimiterTest extends IOTestBase {
     }
 
     @Test public void testWhiteSpace() {
-        assertArrayEquals(new String[]{"A", "B", "C", "D"}, Delimiter.WHITE_SPACE.split("A\tB    C D"));
+        assertEquals(Delimiter.WHITE_SPACE.split("A\tB    C D"), new String[] { "A", "B", "C", "D" });
         assertEquals("A B C D", Delimiter.WHITE_SPACE.join("A", "B", "C", "D"));
     }
 }

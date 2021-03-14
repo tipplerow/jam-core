@@ -15,12 +15,11 @@
  */
 package com.tipplerow.jam.io;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 public class LineReaderTest extends IOTestBase {
     @Test public void testIterator() {

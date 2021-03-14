@@ -15,10 +15,10 @@
  */
 package com.tipplerow.jam.math;
 
-import com.tipplerow.jam.junit.NumericTestBase;
+import com.tipplerow.jam.testng.NumericTestBase;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 public class DoubleRangeTest extends NumericTestBase {
     private static final double LOWER = -2.0;
@@ -250,12 +250,12 @@ public class DoubleRangeTest extends NumericTestBase {
         DoubleRange.NEGATIVE.validate(-1.0);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void testValidateBad1() {
         DoubleRange.POSITIVE.validate(-1.0);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void testValidateBad2() {
         DoubleRange.NEGATIVE.validate(1.0);
     }
@@ -267,17 +267,17 @@ public class DoubleRangeTest extends NumericTestBase {
         assertEquals(DoubleRange.closed(-1.0, 2.0),     DoubleRange.parse(" [ -1.0,2.0 ] "));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void testParseBad1() {
         DoubleRange.parse("-1.0, 2.0");
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void testParseBad2() {
         DoubleRange.parse("[-1.0 2.0]");
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void testParseBad3() {
         DoubleRange.parse("[-1.0; 2.0]");
     }

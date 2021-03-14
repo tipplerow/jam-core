@@ -25,8 +25,8 @@ import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 public class IOUtilTest extends IOTestBase {
     @Test public void testGZip() throws IOException {
@@ -71,7 +71,7 @@ public class IOUtilTest extends IOTestBase {
         IOUtil.close(reader);
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test(expectedExceptions = RuntimeException.class)
     public void testOpenReaderNotFound() {
         IOUtil.openReader("no such file");
     }

@@ -15,14 +15,14 @@
  */
 package com.tipplerow.jam.math;
 
-import com.tipplerow.jam.junit.NumericTestBase;
-
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import com.tipplerow.jam.testng.NumericTestBase;
+
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 public class IntRangeTest extends NumericTestBase {
     @Test public void testAll() {
@@ -100,7 +100,7 @@ public class IntRangeTest extends NumericTestBase {
         assertFalse(range.containsDouble(100.0));
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test(expectedExceptions = RuntimeException.class)
     public void testInvalid() {
         IntRange range = IntRange.instance(1, 0);
     }
@@ -152,7 +152,7 @@ public class IntRangeTest extends NumericTestBase {
         assertFalse(iter.hasNext());
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test(expectedExceptions = RuntimeException.class)
     public void testIteratorRemove() {
         IntRange range = IntRange.instance(5, 7);
         Iterator<Integer> iter = range.iterator();
@@ -161,7 +161,7 @@ public class IntRangeTest extends NumericTestBase {
         iter.remove();
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test(expectedExceptions = NoSuchElementException.class)
     public void testIteratorNoSuch() {
         IntRange range = IntRange.instance(5, 6);
         Iterator<Integer> iter = range.iterator();
@@ -216,12 +216,12 @@ public class IntRangeTest extends NumericTestBase {
         IntRange.NEGATIVE.validate(-1);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void testValidateBad1() {
         IntRange.POSITIVE.validate(-1);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void testValidateBad2() {
         IntRange.NEGATIVE.validate(1);
     }
@@ -236,27 +236,27 @@ public class IntRangeTest extends NumericTestBase {
         assertEquals(upper, range.upper());
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test(expectedExceptions = RuntimeException.class)
     public void testParseInvalid1() {
         IntRange.parse("1, 2");
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test(expectedExceptions = RuntimeException.class)
     public void testParseInvalid2() {
         IntRange.parse("[1, 2");
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test(expectedExceptions = RuntimeException.class)
     public void testParseInvalid3() {
         IntRange.parse("1, 2]");
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test(expectedExceptions = RuntimeException.class)
     public void testParseInvalid4() {
         IntRange.parse("[1 2]");
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test(expectedExceptions = RuntimeException.class)
     public void testParseInvalid5() {
         IntRange.parse("[1, 2, 3]");
     }
