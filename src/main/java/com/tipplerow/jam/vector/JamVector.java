@@ -44,7 +44,22 @@ public final class JamVector implements VectorView {
      * of the input array.
      */
     public static JamVector copyOf(double... array) {
-        return new JamVector(new DenseApacheImpl(new ArrayRealVector(array)));
+        return new JamVector(new DenseApacheImpl(array, true));
+    }
+
+    /**
+     * Creates a new dense vector by copying elements from a vector view.
+     * Subsequent changes to the view will not be reflected in the new
+     * vector, and subsequent changes to the returned vector will not be
+     * reflected in the view.
+     *
+     * @param view the vector view to copy.
+     *
+     * @return a new dense vector with elements initialized to the values
+     * of the input view.
+     */
+    public static JamVector copyOf(VectorView view) {
+        return new JamVector(new DenseApacheImpl(view.toArray(), false));
     }
 
     /**
@@ -90,6 +105,48 @@ public final class JamVector implements VectorView {
     }
 
     /**
+     * Adds a scalar value to every element in this vector.
+     *
+     * @param scalar the scalar value to add.
+     *
+     * @return this vector, for operator chaining.
+     */
+    public JamVector add(double scalar) {
+        for (int index = 0; index < length(); ++index)
+            set(index, get(index) + scalar);
+
+        return this;
+    }
+
+    /**
+     * Updates this vector with the linear combination {@code a * this + b * y}.
+     *
+     * @param a the scalar factor to apply to this vector.
+     * @param b the scalar factor to apply to the input vector.
+     * @param y the other vector in the linear combination.
+     *
+     * @return this vector, for operator chaining.
+     *
+     * @throws RuntimeException unless the input vector has the same length as this.
+     */
+    public JamVector combineInPlace(double a, double b, JamVector y) {
+        validateOperand(y);
+
+        for (int index = 0; index < length(); ++index)
+            set(index, a * this.get(index) + b * y.get(index));
+
+        return this;
+    }
+
+    /**
+     * Creates a deep copy of this vector.
+     * @return a deep copy of this vector.
+     */
+    public JamVector copy() {
+        return new JamVector(impl.copy());
+    }
+
+    /**
      * Assigns the value of the element at a particular position.
      *
      * @param index the zero-based element index.
@@ -99,6 +156,17 @@ public final class JamVector implements VectorView {
      */
     public void set(int index, double value) {
         impl = impl.set(index, value);
+    }
+
+    /**
+     * Subtracts a scalar value from every element in this vector.
+     *
+     * @param scalar the scalar value to subtract.
+     *
+     * @return this vector, for operator chaining.
+     */
+    public JamVector subtract(double scalar) {
+        return add(-scalar);
     }
 
     @Override

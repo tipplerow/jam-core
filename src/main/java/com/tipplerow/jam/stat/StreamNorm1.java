@@ -15,21 +15,22 @@
  */
 package com.tipplerow.jam.stat;
 
+import com.tipplerow.jam.math.DoubleUtil;
+
 import java.util.stream.DoubleStream;
 
 /**
- * Computes the sum of the values in a finite data stream.
+ * Computes the sum of the absolute values in a finite data stream: the 1-norm.
  *
  * @author Scott Shaffer
  */
-final class StreamSum extends StreamStat {
-    private StreamSum() {}
+final class StreamNorm1 extends StreamStat {
+    private StreamNorm1() {}
 
-    static Stat INSTANCE = new StreamSum();
-
+    static Stat INSTANCE = new StreamNorm1();
+    
     @Override
-    protected double computeFinite(DoubleStream data) {
-        return data.sum();
+    public double computeFinite(DoubleStream data) {
+        return data.map(Math::abs).sum();
     }
 }
-

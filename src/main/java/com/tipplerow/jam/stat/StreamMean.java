@@ -18,7 +18,7 @@ package com.tipplerow.jam.stat;
 import java.util.stream.DoubleStream;
 
 /**
- * Finds the average value in a finite data stream
+ * Finds the average value in a finite data stream.
  *
  * @author Scott Shaffer
  */

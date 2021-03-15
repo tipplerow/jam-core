@@ -15,21 +15,11 @@
  */
 package com.tipplerow.jam.stat;
 
-import java.util.stream.DoubleStream;
-
 /**
- * Computes the sum of the values in a finite data stream.
+ * Provides a base class for univariate statistics that are conveniently
+ * computed from a vector of observations.
  *
  * @author Scott Shaffer
  */
-final class StreamSum extends StreamStat {
-    private StreamSum() {}
-
-    static Stat INSTANCE = new StreamSum();
-
-    @Override
-    protected double computeFinite(DoubleStream data) {
-        return data.sum();
-    }
+abstract class VectorStat implements Stat {
 }
-

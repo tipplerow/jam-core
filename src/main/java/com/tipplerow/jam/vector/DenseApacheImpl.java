@@ -21,18 +21,21 @@ import org.apache.commons.math3.linear.ArrayRealVector;
  * @author Scott Shaffer
  */
 final class DenseApacheImpl extends ApacheImpl {
+    DenseApacheImpl(double[] array, boolean copy) {
+        this(new ArrayRealVector(array, copy));
+    }
+
     DenseApacheImpl(ArrayRealVector vector) {
         super(vector);
     }
 
     @Override
-    boolean isDense() {
-        return true;
+    VectorImpl copy() {
+        return new DenseApacheImpl((ArrayRealVector) vector.copy());
     }
 
     @Override
-    VectorImpl set(int index, double value) {
-        vector.setEntry(index, value);
-        return this;
+    boolean isDense() {
+        return true;
     }
 }

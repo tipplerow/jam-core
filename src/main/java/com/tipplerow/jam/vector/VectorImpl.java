@@ -20,12 +20,19 @@ package com.tipplerow.jam.vector;
  *
  * @author Scott Shaffer
  */
-abstract class VectorImpl {
-    abstract int length();
-    abstract double get(int index);
+abstract class VectorImpl implements VectorView {
     abstract boolean isDense();
+    abstract VectorImpl copy();
     abstract VectorImpl set(int index, double value);
-    abstract double[] toArray();
+
+    VectorImpl combineInPlace(double a, double b, VectorView y) {
+        validateOperand(y);
+
+        for (int index = 0; index < length(); ++index)
+            set(index, a * this.get(index) + b * y.get(index));
+
+        return this;
+    }
 
     final boolean isSparse() {
         return !isDense();

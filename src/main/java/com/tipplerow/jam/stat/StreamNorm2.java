@@ -15,21 +15,23 @@
  */
 package com.tipplerow.jam.stat;
 
+import com.tipplerow.jam.math.DoubleUtil;
+
 import java.util.stream.DoubleStream;
 
 /**
- * Computes the sum of the values in a finite data stream.
+ * Computes the square root of the sum of the squares of the values in a
+ * finite data stream: the 2-norm.
  *
  * @author Scott Shaffer
  */
-final class StreamSum extends StreamStat {
-    private StreamSum() {}
+final class StreamNorm2 extends StreamStat {
+    private StreamNorm2() {}
 
-    static Stat INSTANCE = new StreamSum();
+    static Stat INSTANCE = new StreamNorm2();
 
     @Override
-    protected double computeFinite(DoubleStream data) {
-        return data.sum();
+    public double computeFinite(DoubleStream data) {
+        return Math.sqrt(data.map(DoubleUtil::square).sum());
     }
 }
-

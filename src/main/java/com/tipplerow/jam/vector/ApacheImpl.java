@@ -28,17 +28,23 @@ abstract class ApacheImpl extends VectorImpl {
     }
 
     @Override
-    double get(int index) {
+    public double get(int index) {
         return vector.getEntry(index);
     }
 
     @Override
-    int length() {
+    public int length() {
         return vector.getDimension();
     }
 
     @Override
-    double[] toArray() {
+    public double[] toArray() {
         return vector.toArray();
+    }
+
+    @Override
+    VectorImpl set(int index, double value) {
+        vector.setEntry(index, value);
+        return this;
     }
 }

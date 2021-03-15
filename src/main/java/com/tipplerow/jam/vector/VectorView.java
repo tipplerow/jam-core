@@ -15,6 +15,7 @@
  */
 package com.tipplerow.jam.vector;
 
+import com.tipplerow.jam.lang.JamException;
 import com.tipplerow.jam.math.DoubleComparator;
 
 import java.util.ArrayList;
@@ -114,6 +115,31 @@ public interface VectorView {
     }
 
     /**
+     * Computes the difference between this vector and a scalar quantity and
+     * returns the result in a new vector.
+     *
+     * @param scalar the scalar quantity to subtract.
+     *
+     * @return the difference between this vector and the scalar quantity in
+     * a new vector.
+     */
+    default JamVector minus(double scalar) {
+        return plus(-scalar);
+    }
+
+    /**
+     * Computes the sum of this vector and a scalar quantity and returns
+     * the result in a new vector.
+     *
+     * @param scalar the scalar quantity to add.
+     *
+     * @return the sum of this vector and the scalar quantity in a new vector.
+     */
+    default JamVector plus(double scalar) {
+        return JamVector.copyOf(this).add(scalar);
+    }
+
+    /**
      * Returns a sequential stream of the values contained in this vector
      * (ordered by their index).
      *
@@ -160,6 +186,19 @@ public interface VectorView {
             array[index] = get(index);
 
         return array;
+    }
+
+    /**
+     * Ensures that a vector operand has the same length as this vector.
+     *
+     * @param operand the vector operand to validate.
+     *
+     * @throws RuntimeException unless the operand has the same length as
+     * this vector.
+     */
+    default void validateOperand(VectorView operand) {
+        if (operand.length() != this.length())
+            throw JamException.runtime("Vector length mismatch: [%d] != [%d].", operand.length(), this.length());
     }
 
     /**
