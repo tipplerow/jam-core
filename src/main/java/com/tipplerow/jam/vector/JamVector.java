@@ -20,8 +20,8 @@ import org.apache.commons.math3.linear.ArrayRealVector;
 import java.util.Arrays;
 
 /**
- * Defines an interface for mutable numeric vectors that is independent
- * of their underlying physical storage (dense or sparse).
+ * Represents a one-dimensional vector, provides basic operations from
+ * linear algebra, and optimizes the underlying physical storage.
  *
  * @author Scott Shaffer
  */
