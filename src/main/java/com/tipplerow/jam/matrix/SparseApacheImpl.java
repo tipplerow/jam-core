@@ -15,32 +15,19 @@
  */
 package com.tipplerow.jam.matrix;
 
-import org.apache.commons.math3.linear.Array2DRowRealMatrix;
-import org.apache.commons.math3.linear.BlockRealMatrix;
+import org.apache.commons.math3.linear.SparseRealMatrix;
 
 /**
  * @author Scott Shaffer
  */
-class DenseApacheImpl extends ApacheImpl {
-    DenseApacheImpl(Array2DRowRealMatrix matrix) {
+class SparseApacheImpl extends ApacheImpl {
+    SparseApacheImpl(SparseRealMatrix matrix) {
         super(matrix);
-    }
-
-    DenseApacheImpl(BlockRealMatrix matrix) {
-        super(matrix);
-    }
-
-    DenseApacheImpl(int nrow, int ncol) {
-        this(new BlockRealMatrix(nrow, ncol));
-    }
-
-    DenseApacheImpl(double[][] data, boolean copy) {
-        this(new Array2DRowRealMatrix(data, copy));
     }
 
     @Override
     boolean isDense() {
-        return true;
+        return false;
     }
 
     @Override

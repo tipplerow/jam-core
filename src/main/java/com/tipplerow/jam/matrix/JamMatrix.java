@@ -15,8 +15,7 @@
  */
 package com.tipplerow.jam.matrix;
 
-import org.apache.commons.math3.linear.Array2DRowRealMatrix;
-import org.apache.commons.math3.linear.BlockRealMatrix;
+import com.tipplerow.jam.vector.VectorView;
 
 import java.util.Arrays;
 
@@ -45,22 +44,34 @@ public final class JamMatrix implements MatrixView {
      * of the input array.
      */
     public static JamMatrix copyOf(double[][] array) {
-        return new JamMatrix(new DenseApacheImpl(new Array2DRowRealMatrix(array, true)));
+        return new JamMatrix(new DenseApacheImpl(array, true));
     }
 
     /**
-     * Creates a new matrix with a fixed length and dense physical storage.
+     * Creates a new matrix with a fixed shape and dense physical storage.
      *
      * @param nrow the number of matrix rows.
      * @param ncol the number of matrix columns.
      *
-     * @return a new matrix with the specified length, dense storage, and
+     * @return a new matrix with the specified shape, dense storage, and
      * all elements initialized to zero.
      *
-     * @throws RuntimeException if the length is negative.
+     * @throws RuntimeException if either dimension is negative.
      */
     public static JamMatrix dense(int nrow, int ncol) {
-        return new JamMatrix(new DenseApacheImpl(new BlockRealMatrix(nrow, ncol)));
+        return new JamMatrix(new DenseApacheImpl(nrow, ncol));
+    }
+
+    /**
+     * Creates a new diagonal matrix with a fixed shape.
+     *
+     * @param values the values of the diagonal elements.
+     *
+     * @return a new diagonal matrix with shape corresponding to the input
+     * vector of diagonal elements.
+     */
+    public static JamMatrix diag(VectorView values) {
+        return new JamMatrix(new DiagonalApacheImpl(values.toArray(), false));
     }
 
     /**
@@ -73,7 +84,7 @@ public final class JamMatrix implements MatrixView {
      * @return a new matrix using the specified array as the underlying storage.
      */
     public static JamMatrix wrap(double[][] array) {
-        return new JamMatrix(new DenseApacheImpl(new Array2DRowRealMatrix(array, false)));
+        return new JamMatrix(new DenseApacheImpl(array, false));
     }
 
     /**
@@ -121,6 +132,19 @@ public final class JamMatrix implements MatrixView {
 
     @Override
     public String toString() {
-        return Arrays.toString(toArray());
+        StringBuilder builder = new StringBuilder();
+        builder.append("[");
+
+        if (nrow() > 0)
+            builder.append(Arrays.toString(toArray()));
+
+        for (int row = 1; row < nrow(); ++row) {
+            builder.append(", ");
+            builder.append(Arrays.toString(toArray()));
+        }
+
+        builder.append("}");
+
+        return builder.toString();
     }
 }

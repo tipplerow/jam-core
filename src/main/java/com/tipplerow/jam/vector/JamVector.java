@@ -15,6 +15,9 @@
  */
 package com.tipplerow.jam.vector;
 
+import com.tipplerow.jam.lang.JamException;
+import com.tipplerow.jam.math.DoubleComparator;
+import com.tipplerow.jam.stat.Stat;
 import org.apache.commons.math3.linear.ArrayRealVector;
 
 import java.util.Arrays;
@@ -77,6 +80,20 @@ public final class JamVector implements VectorView {
     }
 
     /**
+     * Creates a vector of ones with a fixed length.
+     *
+     * @param length the length of the vector to build.
+     *
+     * @return a vector of the specified length having all elements
+     * initialized to one.
+     *
+     * @throws RuntimeException if the length is negative.
+     */
+    public static JamVector ones(int length) {
+        return rep(1.0, length);
+    }
+
+    /**
      * Creates a new dense vector with a fixed length having all elements
      * initialized to the same value, as in the R function {@code rep(x, n)}.
      *
@@ -105,7 +122,7 @@ public final class JamVector implements VectorView {
     }
 
     /**
-     * Adds a scalar value to every element in this vector.
+     * Adds a scalar value to every element in this vector (in place).
      *
      * @param scalar the scalar value to add.
      *
@@ -119,6 +136,20 @@ public final class JamVector implements VectorView {
     }
 
     /**
+     * Adds another vector to this vector (in place).
+     *
+     * @param operand the vector to add.
+     *
+     * @return this vector, for operator chaining.
+     *
+     * @throws RuntimeException unless the operand has the same length
+     * as this vector.
+     */
+    public JamVector add(VectorView operand) {
+        return combineInPlace(1.0, 1.0, operand);
+    }
+
+    /**
      * Updates this vector with the linear combination {@code a * this + b * y}.
      *
      * @param a the scalar factor to apply to this vector.
@@ -129,7 +160,7 @@ public final class JamVector implements VectorView {
      *
      * @throws RuntimeException unless the input vector has the same length as this.
      */
-    public JamVector combineInPlace(double a, double b, JamVector y) {
+    public JamVector combineInPlace(double a, double b, VectorView y) {
         validateOperand(y);
 
         for (int index = 0; index < length(); ++index)
@@ -144,6 +175,47 @@ public final class JamVector implements VectorView {
      */
     public JamVector copy() {
         return new JamVector(impl.copy());
+    }
+
+    /**
+     * Divides every element in this vector by a scalar factor (in place).
+     *
+     * @param scalar the scalar divisor.
+     *
+     * @return this vector, for operator chaining.
+     */
+    public JamVector divide(double scalar) {
+        return multiply(1.0 / scalar);
+    }
+
+    /**
+     * Multiplies every element in this vector by a scalar factor (in place).
+     *
+     * @param scalar the scalar multiplier.
+     *
+     * @return this vector, for operator chaining.
+     */
+    public JamVector multiply(double scalar) {
+        for (int index = 0; index < length(); ++index)
+            set(index, scalar * get(index));
+
+        return this;
+    }
+
+    /**
+     * Rescales this vector (in place) so that the elements sum to one.
+     *
+     * @return this vector, for operator chaining.
+     *
+     * @throws RuntimeException if the elements sum to zero (or close to it).
+     */
+    public JamVector normalize() {
+        double sum = Stat.sum(this);
+
+        if (DoubleComparator.DEFAULT.isZero(sum))
+            throw JamException.runtime("Vector elements sum to zero.");
+
+        return divide(sum);
     }
 
     /**
@@ -167,6 +239,35 @@ public final class JamVector implements VectorView {
      */
     public JamVector subtract(double scalar) {
         return add(-scalar);
+    }
+
+    /**
+     * Subtracts another vector from this vector (in place).
+     *
+     * @param operand the vector to subtract.
+     *
+     * @return this vector, for operator chaining.
+     *
+     * @throws RuntimeException unless the operand has the same length
+     * as this vector.
+     */
+    public JamVector subtract(VectorView operand) {
+        return combineInPlace(1.0, -1.0, operand);
+    }
+
+    /**
+     * Rescales this vector (in place) to a unit vector (with 2-norm
+     * equal to one).
+     *
+     * @return this vector, for operator chaining.
+     */
+    public JamVector unitize() {
+        double norm = Stat.norm2(this);
+
+        if (DoubleComparator.DEFAULT.isZero(norm))
+            throw JamException.runtime("Vector has zero norm.");
+
+        return divide(norm);
     }
 
     @Override

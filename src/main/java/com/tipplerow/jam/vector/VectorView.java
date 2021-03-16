@@ -116,7 +116,7 @@ public interface VectorView {
 
     /**
      * Computes the difference between this vector and a scalar quantity and
-     * returns the result in a new vector.
+     * returns the result in a new vector; this vector is unchanged.
      *
      * @param scalar the scalar quantity to subtract.
      *
@@ -128,8 +128,24 @@ public interface VectorView {
     }
 
     /**
+     * Computes the difference between this vector and another vector and
+     * returns the result in a new vector; this vector is unchanged.
+     *
+     * @param operand the vector quantity to subtract.
+     *
+     * @return the difference between this vector and the input vector in
+     * a new vector.
+     *
+     * @throws RuntimeException unless the input vector has the same length
+     * as this vector.
+     */
+    default JamVector minus(VectorView operand) {
+        return JamVector.copyOf(this).subtract(operand);
+    }
+
+    /**
      * Computes the sum of this vector and a scalar quantity and returns
-     * the result in a new vector.
+     * the result in a new vector; this vector is unchanged.
      *
      * @param scalar the scalar quantity to add.
      *
@@ -137,6 +153,21 @@ public interface VectorView {
      */
     default JamVector plus(double scalar) {
         return JamVector.copyOf(this).add(scalar);
+    }
+
+    /**
+     * Computes the sum of this vector and another vector and returns the
+     * result in a new vector; this vector is unchanged.
+     *
+     * @param operand the vector quantity to add.
+     *
+     * @return the sum of this vector and the input vector in a new vector.
+     *
+     * @throws RuntimeException unless the input vector has the same length
+     * as this vector.
+     */
+    default JamVector plus(VectorView operand) {
+        return JamVector.copyOf(this).add(operand);
     }
 
     /**
