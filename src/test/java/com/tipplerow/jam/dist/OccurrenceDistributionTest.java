@@ -18,8 +18,8 @@ package com.tipplerow.jam.dist;
 import com.tipplerow.jam.math.Factorial;
 import com.tipplerow.jam.math.Probability;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 public class OccurrenceDistributionTest extends DiscreteDistributionTestBase {
     @Test public void test0() {

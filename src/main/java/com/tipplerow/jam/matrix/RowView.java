@@ -15,22 +15,33 @@
  */
 package com.tipplerow.jam.matrix;
 
-import com.tipplerow.jam.vector.JamVector;
 import com.tipplerow.jam.vector.VectorView;
 
-/**
- * @author Scott Shaffer
- */
-abstract class MatrixImpl {
-    abstract int ncol();
-    abstract int nrow();
-    abstract double get(int row, int col);
-    abstract boolean isDense();
-    abstract MatrixImpl set(int row, int col, double value);
-    abstract JamVector times(VectorView vector);
-    abstract double[][] toArray();
+import lombok.NonNull;
 
-    final boolean isSparse() {
-        return !isDense();
+final class RowView implements VectorView {
+    @NonNull
+    private final MatrixView matrix;
+
+    private final int rowind;
+
+    private RowView(MatrixView matrix, int rowind) {
+        this.matrix = matrix;
+        this.rowind = rowind;
+        matrix.validateRow(rowind);
+    }
+
+    static RowView of(MatrixView matrix, int rowind) {
+        return new RowView(matrix, rowind);
+    }
+
+    @Override
+    public double get(int colind) {
+        return matrix.get(rowind, colind);
+    }
+
+    @Override
+    public int length() {
+        return matrix.ncol();
     }
 }

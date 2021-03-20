@@ -29,10 +29,10 @@ final class BinomialDistributionApprox extends BinomialDistribution {
     BinomialDistributionApprox(int trialCount, Probability successProb) {
         super(trialCount, successProb);
 
-        double mean  = mean(trialCount, successProb);
-        double stdev = Math.sqrt(variance(trialCount, successProb));
+        double mean = mean(trialCount, successProb);
+        double sdev = Math.sqrt(variance(trialCount, successProb));
 
-        this.normal = new NormalDistribution(mean, stdev);
+        this.normal = new NormalDistribution(mean, sdev);
     }
 
     @Override public double median() {

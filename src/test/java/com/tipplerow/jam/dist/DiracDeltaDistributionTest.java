@@ -15,8 +15,7 @@
  */
 package com.tipplerow.jam.dist;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import org.testng.annotations.Test;
 
 public class DiracDeltaDistributionTest extends RealDistributionTestBase {
     private static final double TOLERANCE = 1.0e-12;
@@ -43,9 +42,5 @@ public class DiracDeltaDistributionTest extends RealDistributionTestBase {
 
     @Test public void testMoments() {
 	momentTest(dist, 10000, TOLERANCE, TOLERANCE, TOLERANCE, false);
-    }
-
-    public static void main(String[] args) {
-        org.junit.runner.JUnitCore.main("jam.dist.DiracDeltaDistributionTest");
     }
 }

@@ -15,13 +15,11 @@
  */
 package com.tipplerow.jam.dist;
 
-import com.tipplerow.jam.junit.NumericTestBase;
 import com.tipplerow.jam.math.VectorMoment;
-import com.tipplerow.jam.matrix.JamMatrix;
 import com.tipplerow.jam.vector.JamVector;
+import com.tipplerow.jam.testng.NumericTestBase;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import static org.testng.Assert.*;
 
 public abstract class MultivariateDistributionTestBase extends NumericTestBase {
     protected final MultivariateDistribution dist;

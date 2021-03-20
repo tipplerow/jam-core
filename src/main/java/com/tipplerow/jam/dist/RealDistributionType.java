@@ -277,7 +277,7 @@ public enum RealDistributionType {
      * valid for this distribution type.
      */
     public RealDistribution create(String param) {
-        return create(JamVector.parseCSV(param).toNumeric());
+        return create(JamVector.parseCSV(param).toArray());
     }
 
     /**

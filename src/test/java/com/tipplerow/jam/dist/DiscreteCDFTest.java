@@ -15,11 +15,11 @@
  */
 package com.tipplerow.jam.dist;
 
-import com.tipplerow.jam.junit.NumericTestBase;
 import com.tipplerow.jam.math.DoubleUtil;
+import com.tipplerow.jam.testng.NumericTestBase;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 public class DiscreteCDFTest extends NumericTestBase {
     private final DiscretePDF pdf =
@@ -27,23 +27,6 @@ public class DiscreteCDFTest extends NumericTestBase {
 
     private final DiscreteCDF cdf =
         DiscreteCDF.compute(pdf);
-
-    @Test public void testEquals() {
-        DiscretePDF pdf1 = DiscretePDF.create(0, new double[] { 0.1, 0.2, 0.3, 0.4 });
-        DiscretePDF pdf2 = DiscretePDF.create(0, new double[] { 0.1, 0.2, 0.2999, 0.4001 });
-        DiscretePDF pdf3 = DiscretePDF.create(5, new double[] { 0.1, 0.2, 0.3, 0.4 });
-
-        DiscreteCDF cdf1 = DiscreteCDF.compute(pdf1);
-        DiscreteCDF cdf2 = DiscreteCDF.compute(pdf2);
-        DiscreteCDF cdf3 = DiscreteCDF.compute(pdf3);
-
-        assertFalse(cdf1.equals(cdf2));
-        assertFalse(cdf1.equals(cdf3));
-
-        assertTrue(cdf1.equals(cdf2, 0.001));
-        assertFalse(cdf1.equals(cdf2, 0.00001));
-        assertFalse(cdf1.equals(cdf3, 0.1));
-    }
 
     @Test public void testEvaluate() {
         assertDouble(0.0, cdf.evaluate(0));
@@ -109,9 +92,5 @@ public class DiscreteCDFTest extends NumericTestBase {
             
         for (int k = 0; k < count.length; k++)
             assertEquals(pdf.evaluate(k), DoubleUtil.ratio(count[k], SAMPLE_COUNT), 0.005);
-    }
-
-    public static void main(String[] args) {
-        org.junit.runner.JUnitCore.main("jam.dist.DiscreteCDFTest");
     }
 }

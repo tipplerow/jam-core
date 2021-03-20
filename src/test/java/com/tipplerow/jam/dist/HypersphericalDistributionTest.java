@@ -22,12 +22,12 @@ import com.tipplerow.jam.lattice.Coord;
 import com.tipplerow.jam.math.StatUtil;
 import com.tipplerow.jam.vector.JamVector;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 public class HypersphericalDistributionTest extends MultivariateDistributionTestBase {
     private static final double RADIUS = 2.0;
-    private static final JamVector CENTER = JamVector.valueOf(-1.0, 0.0, 2.0);
+    private static final JamVector CENTER = JamVector.copyOf(-1.0, 0.0, 2.0);
 
     public HypersphericalDistributionTest() {
         super(new HypersphericalDistribution(RADIUS, CENTER));
@@ -42,19 +42,19 @@ public class HypersphericalDistributionTest extends MultivariateDistributionTest
             assertDouble(RADIUS, StatUtil.norm2(samples[sample].minus(CENTER)));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void testInvalidDimensionality() {
         new HypersphericalDistribution(1, 10.0);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void testInvalidRadius() {
         new HypersphericalDistribution(3, 0.0);
     }
 
     @Test public void testExpansionDistribution() {
         double    radius = 0.5 * Math.sqrt(3.0);
-        JamVector center = JamVector.valueOf(0.0, 0.0, 0.0);
+        JamVector center = JamVector.copyOf(0.0, 0.0, 0.0);
         
         HypersphericalDistribution dist =
             new HypersphericalDistribution(radius, center);

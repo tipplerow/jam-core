@@ -15,7 +15,10 @@
  */
 package com.tipplerow.jam.matrix;
 
+import com.tipplerow.jam.lang.JamException;
 import com.tipplerow.jam.math.DoubleComparator;
+import com.tipplerow.jam.vector.JamVector;
+import com.tipplerow.jam.vector.VectorView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -122,6 +125,33 @@ public interface MatrixView {
     }
 
     /**
+     * Identifies square matrices.
+     *
+     * @return {@code true} iff this is a square matrix.
+     */
+    default boolean isSquare() {
+        return nrow() == ncol();
+    }
+
+    /**
+     * Identifies symmetric matrices (allowing for the default
+     * floating-point tolerance).
+     *
+     * @return {@code true} iff this is a symmetric matrix.
+     */
+    default boolean isSymmetric() {
+        if (!isSquare())
+            return false;
+
+        for (int row = 0; row < nrow(); ++row)
+            for (int col = row + 1; col < ncol(); ++col)
+                if (!DoubleComparator.DEFAULT.equals(get(row, col), get(col, row)))
+                    return false;
+
+        return true;
+    }
+
+    /**
      * Returns the number of elements in this matrix.
      * @return the number of elements in this matrix.
      */
@@ -166,6 +196,30 @@ public interface MatrixView {
     }
 
     /**
+     * Computes the product of this matrix and a vector and returns the
+     * result in a new JamVector.
+     *
+     * @param vector the (right-hand) vector factor.
+     *
+     * @return the product of this matrix and the specified vector in a
+     * new JamVector.
+     *
+     * @throws RuntimeException unless the length of the input vector
+     * matches the number of columns in this matrix.
+     */
+    default JamVector times(VectorView vector) {
+        if (vector.length() != ncol())
+            throw JamException.runtime("Incongruent vector factor.");
+
+        JamVector result = JamVector.dense(nrow());
+
+        for (int row = 0; row < nrow(); ++row)
+            result.set(row, viewRow(row).dot(vector));
+
+        return result;
+    }
+
+    /**
      * Returns the elements of this matrix in new bare array.
      *
      * @return the elements of this matrix in new bare array.
@@ -183,6 +237,56 @@ public interface MatrixView {
         }
 
         return rows;
+    }
+
+    /**
+     * Ensures that this matrix contains a particular column.
+     *
+     * @param col the column index to validate.
+     *
+     * @throws RuntimeException unless the specified index is valid.
+     */
+    default void validateColumn(int col) {
+        if (col < 0 || col >= ncol())
+            throw JamException.runtime("Invalid column index: [%d].", col);
+    }
+
+    /**
+     * Ensures that this matrix contains a particular row.
+     *
+     * @param row the row index to validate.
+     *
+     * @throws RuntimeException unless the specified index is valid.
+     */
+    default void validateRow(int row) {
+        if (row < 0 || row >= nrow())
+            throw JamException.runtime("Invalid row index: [%d].", row);
+    }
+
+    /**
+     * Returns a VectorView of a column in this matrix.
+     *
+     * @param col the zero-offset index of the column to view.
+     *
+     * @return a VectorView of the specified column.
+     *
+     * @throws RuntimeException unless the column index is valid.
+     */
+    default VectorView viewColumn(int col) {
+        return ColumnView.of(this, col);
+    }
+
+    /**
+     * Returns a VectorView of a row in this matrix.
+     *
+     * @param row the zero-offset index of the row to view.
+     *
+     * @return a VectorView of the specified row.
+     *
+     * @throws RuntimeException unless the row index is valid.
+     */
+    default VectorView viewRow(int row) {
+        return RowView.of(this, row);
     }
 
     /**

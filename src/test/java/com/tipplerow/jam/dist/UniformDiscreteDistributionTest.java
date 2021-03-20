@@ -20,8 +20,8 @@ import com.google.common.collect.Multiset;
 
 import com.tipplerow.jam.util.MultisetUtil;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 public class UniformDiscreteDistributionTest extends DiscreteDistributionTestBase {
     private static final double TOLERANCE = 1.0e-12;
@@ -78,12 +78,12 @@ public class UniformDiscreteDistributionTest extends DiscreteDistributionTestBas
         assertEquals(0.25, MultisetUtil.frequency(samples,  2), 0.01);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void testInvalidRange1() {
         new UniformDiscreteDistribution(1, 0);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void testInvalidRange2() {
         new UniformDiscreteDistribution(1, 1);
     }

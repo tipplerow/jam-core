@@ -19,8 +19,8 @@ import com.tipplerow.jam.math.VectorMoment;
 import com.tipplerow.jam.matrix.JamMatrix;
 import com.tipplerow.jam.vector.JamVector;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 public class IIDNormalDistributionTest extends MultivariateDistributionTestBase {
     private static final int    NVAR  =  3;
@@ -56,12 +56,12 @@ public class IIDNormalDistributionTest extends MultivariateDistributionTestBase 
         momentTest(0.001, 0.01, false);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void testInvalidDim() {
         new IIDNormalDistribution(0, 1.0, 10.0);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void testInvalidStDev() {
         new IIDNormalDistribution(3, 0.0, 0.0);
     }

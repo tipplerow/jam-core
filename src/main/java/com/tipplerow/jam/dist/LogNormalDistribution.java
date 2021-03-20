@@ -15,8 +15,6 @@
  */
 package com.tipplerow.jam.dist;
 
-import com.tipplerow.jam.math.JamRandom;
-
 /**
  * Represents a probability distribution in which the logarithm of the
  * random variable is normally distributed.
@@ -32,30 +30,30 @@ public final class LogNormalDistribution extends LogDerivedDistribution {
      * @param meanLog the mean of the logarithm of the random
      * variable.
      *
-     * @param stdevLog the standard deviation of the logarithm of the
+     * @param sdevLog the standard deviation of the logarithm of the
      * random variable.
      *
      * @throws IllegalArgumentException unless the standard deviation
      * is positive.
      */
-    public LogNormalDistribution(double meanLog, double stdevLog) {
-        this.normal = new NormalDistribution(meanLog, stdevLog);
+    public LogNormalDistribution(double meanLog, double sdevLog) {
+        this.normal = new NormalDistribution(meanLog, sdevLog);
     }
 
     @Override public double mean() {
-	double meanLog  = getMeanLog();
-	double stdevLog = getStDevLog();
-	double varLog   = stdevLog * stdevLog;
+        double meanLog = getMeanLog();
+        double sdevLog = getStDevLog();
+        double varLog  = sdevLog * sdevLog;
 
-	return Math.exp(meanLog + 0.5 * varLog);
+        return Math.exp(meanLog + 0.5 * varLog);
     }
 
     @Override public double variance() {
-	double meanLog  = getMeanLog();
-	double stdevLog = getStDevLog();
-	double varLog   = stdevLog * stdevLog;
+        double meanLog = getMeanLog();
+        double sdevLog = getStDevLog();
+        double varLog  = sdevLog * sdevLog;
 
-	return Math.exp(varLog - 1.0) * Math.exp(2.0 * meanLog + varLog);
+        return Math.exp(varLog - 1.0) * Math.exp(2.0 * meanLog + varLog);
     }
 
     /**
@@ -73,7 +71,7 @@ public final class LogNormalDistribution extends LogDerivedDistribution {
      * @return the standard deviation of the logarithm of this distribution.
      */
     public double getStDevLog() {
-        return normal.stdev();
+        return normal.sdev();
     }
 
     @Override protected RealDistribution getLogDistribution() {

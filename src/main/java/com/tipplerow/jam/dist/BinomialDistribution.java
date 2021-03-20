@@ -87,10 +87,10 @@ public abstract class BinomialDistribution extends AbstractDiscreteDistribution 
         // entire range of support [0, N] lies within four standard
         // deviations of the mean...
         double mean  = mean(trialCount, successProb);
-        double stdev = Math.sqrt(variance(trialCount, successProb));
+        double sdev = Math.sqrt(variance(trialCount, successProb));
 
-        double lower = mean - 4.0 * stdev;
-        double upper = mean + 4.0 * stdev;
+        double lower = mean - 4.0 * sdev;
+        double upper = mean + 4.0 * sdev;
 
         IntRange range = support(trialCount);
         return range.containsDouble(lower) && range.containsDouble(upper);
@@ -220,11 +220,11 @@ public abstract class BinomialDistribution extends AbstractDiscreteDistribution 
 
     @Override public IntRange effectiveRange() {
         double mean  = mean();
-        double stdev = stdev();
+        double sdev = sdev();
         double width = 12.0;
 
-        int lower = Math.max(0,          (int) Math.floor(mean - width * stdev));
-        int upper = Math.min(trialCount, (int) Math.ceil( mean + width * stdev));
+        int lower = Math.max(0,          (int) Math.floor(mean - width * sdev));
+        int upper = Math.min(trialCount, (int) Math.ceil( mean + width * sdev));
 
         return IntRange.instance(lower, upper);
     }

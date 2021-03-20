@@ -19,26 +19,26 @@ import org.apache.commons.math3.random.Well44497b;
 
 import com.tipplerow.jam.math.Probability;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 public class BinomialDistributionTest extends DiscreteDistributionTestBase {
     private static final double TOLERANCE = 1.0e-12;
     private static final Well44497b RNG = new Well44497b(20171114);
 
-    private final jam.dist.BinomialDistribution jam0 = jam(0, 0.5);
+    private final com.tipplerow.jam.dist.BinomialDistribution jam0 = jam(0, 0.5);
 
-    private final jam.dist.BinomialDistribution jam_01_20 = jam(1, 0.2);
-    private final jam.dist.BinomialDistribution jam_01_60 = jam(1, 0.6);
+    private final com.tipplerow.jam.dist.BinomialDistribution jam_01_20 = jam(1, 0.2);
+    private final com.tipplerow.jam.dist.BinomialDistribution jam_01_60 = jam(1, 0.6);
 
-    private final jam.dist.BinomialDistribution jam_05_10 = jam(5, 0.10);
-    private final jam.dist.BinomialDistribution jam_05_50 = jam(5, 0.50);
+    private final com.tipplerow.jam.dist.BinomialDistribution jam_05_10 = jam(5, 0.10);
+    private final com.tipplerow.jam.dist.BinomialDistribution jam_05_50 = jam(5, 0.50);
 
-    private final jam.dist.BinomialDistribution jam_30_50 = jam(30, 0.50);
-    private final jam.dist.BinomialDistribution jam_30_90 = jam(30, 0.90);
+    private final com.tipplerow.jam.dist.BinomialDistribution jam_30_50 = jam(30, 0.50);
+    private final com.tipplerow.jam.dist.BinomialDistribution jam_30_90 = jam(30, 0.90);
 
-    private final jam.dist.BinomialDistribution jam_95_25 = jam(95, 0.25);
-    private final jam.dist.BinomialDistribution jam_95_60 = jam(95, 0.60);
+    private final com.tipplerow.jam.dist.BinomialDistribution jam_95_25 = jam(95, 0.25);
+    private final com.tipplerow.jam.dist.BinomialDistribution jam_95_60 = jam(95, 0.60);
 
     private final org.apache.commons.math3.distribution.BinomialDistribution apache0 = apache(0, 0.5);
 
@@ -54,8 +54,8 @@ public class BinomialDistributionTest extends DiscreteDistributionTestBase {
     private final org.apache.commons.math3.distribution.BinomialDistribution apache_95_25 = apache(95, 0.25);
     private final org.apache.commons.math3.distribution.BinomialDistribution apache_95_60 = apache(95, 0.60);
 
-    private static jam.dist.BinomialDistribution jam(int count, double prob) {
-        return jam.dist.BinomialDistribution.create(count, Probability.valueOf(prob));
+    private static com.tipplerow.jam.dist.BinomialDistribution jam(int count, double prob) {
+        return com.tipplerow.jam.dist.BinomialDistribution.create(count, Probability.of(prob));
     }
 
     private static org.apache.commons.math3.distribution.BinomialDistribution apache(int count, double prob) {
@@ -98,7 +98,7 @@ public class BinomialDistributionTest extends DiscreteDistributionTestBase {
         compareCDF(jam_95_60, apache_95_60);
     }
 
-    private void compareCDF(jam.dist.BinomialDistribution jam,
+    private void compareCDF(com.tipplerow.jam.dist.BinomialDistribution jam,
                             org.apache.commons.math3.distribution.BinomialDistribution apache) {
         for (Integer k : jam.effectiveRange())
             assertEquals(jam.cdf(k), apache.cumulativeProbability(k), 1.0E-06);
@@ -120,7 +120,7 @@ public class BinomialDistributionTest extends DiscreteDistributionTestBase {
         comparePDF(jam_95_60, apache_95_60);
     }
 
-    private void comparePDF(jam.dist.BinomialDistribution jam,
+    private void comparePDF(com.tipplerow.jam.dist.BinomialDistribution jam,
                             org.apache.commons.math3.distribution.BinomialDistribution apache) {
         for (Integer k : jam.effectiveRange())
             assertEquals(jam.pdf(k), apache.probability(k), 1.0E-06);
@@ -151,9 +151,9 @@ public class BinomialDistributionTest extends DiscreteDistributionTestBase {
         effectiveRangeTest(jam(trialCount, 0.98), 1.0e-09, false);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void testInvalidTrialCount() {
-        jam.dist.BinomialDistribution.create(-1, Probability.valueOf(0.5));
+        com.tipplerow.jam.dist.BinomialDistribution.create(-1, Probability.of(0.5));
     }
 
     @Test public void testMoments() {
@@ -173,10 +173,10 @@ public class BinomialDistributionTest extends DiscreteDistributionTestBase {
     }
 
     @Test public void testParse() {
-        jam.dist.BinomialDistribution dist = 
-            (jam.dist.BinomialDistribution) DiscreteDistributionType.parse("BINOMIAL; 5, 0.2");
+        com.tipplerow.jam.dist.BinomialDistribution dist =
+            (com.tipplerow.jam.dist.BinomialDistribution) DiscreteDistributionType.parse("BINOMIAL; 5, 0.2");
 
-        assertTrue(dist instanceof jam.dist.BinomialDistribution);
+        assertTrue(dist instanceof com.tipplerow.jam.dist.BinomialDistribution);
         assertEquals(5, dist.getTrialCount());
         assertDouble(0.2, dist.getSuccessProb().doubleValue());
     }
@@ -195,9 +195,5 @@ public class BinomialDistributionTest extends DiscreteDistributionTestBase {
 
         sampleTest(100000, 0.5, 0.5, jam_95_25, apache_95_25);
         sampleTest(100000, 0.5, 0.5, jam_95_60, apache_95_60);
-    }
-
-    public static void main(String[] args) {
-        org.junit.runner.JUnitCore.main("jam.dist.BinomialDistributionTest");
     }
 }

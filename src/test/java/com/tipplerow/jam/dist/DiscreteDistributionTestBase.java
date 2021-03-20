@@ -17,13 +17,12 @@ package com.tipplerow.jam.dist;
 
 import org.apache.commons.math3.distribution.IntegerDistribution;
 
-import com.tipplerow.jam.junit.NumericTestBase;
 import com.tipplerow.jam.math.IntRange;
 import com.tipplerow.jam.math.IntUtil;
-import com.tipplerow.jam.math.StatSummary;
+import com.tipplerow.jam.stat.StatSummary;
+import com.tipplerow.jam.testng.NumericTestBase;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import static org.testng.Assert.*;
 
 public abstract class DiscreteDistributionTestBase extends NumericTestBase {
     protected DiscreteDistributionTestBase() {
@@ -46,8 +45,8 @@ public abstract class DiscreteDistributionTestBase extends NumericTestBase {
         }
 
         if (verbose) {
-            System.out.println(String.format("Maximum CDF error: %.2g", maxErrCDF));
-            System.out.println(String.format("Maximum PDF error: %.2g", maxErrPDF));
+            System.out.printf("Maximum CDF error: %.2g%n", maxErrCDF);
+            System.out.printf("Maximum PDF error: %.2g%n", maxErrPDF);
         }
 
         assertTrue(maxErrCDF <= tolerance);
@@ -59,8 +58,8 @@ public abstract class DiscreteDistributionTestBase extends NumericTestBase {
         double   omittedMass    = 1.0 - distribution.cdf(effectiveRange);
 
         if (verbose) {
-            System.out.println(String.format("Effective range: %s", effectiveRange));
-            System.out.println(String.format("Omitted mass:    %g", omittedMass));
+            System.out.printf("Effective range: %s%n", effectiveRange);
+            System.out.printf("Omitted mass:    %g%n", omittedMass);
         }
 
         assertTrue(omittedMass <= tolerance);
@@ -71,19 +70,19 @@ public abstract class DiscreteDistributionTestBase extends NumericTestBase {
                            double meanTolerance,
                            double varianceTolerance,
                            boolean verbose) {
-	StatSummary summary = StatSummary.compute(distribution.sample(random(), sampleCount));
+        StatSummary summary = StatSummary.compute(distribution.sample(random(), sampleCount));
 
-	double meanError     = Math.abs(distribution.mean()     - summary.getMean());
-	double varianceError = Math.abs(distribution.variance() - summary.getVariance());
+        double meanError     = Math.abs(distribution.mean()     - summary.getMean());
+        double varianceError = Math.abs(distribution.variance() - summary.getVariance());
 
-	if (verbose) {
+        if (verbose) {
             System.out.println(summary);
-	    System.out.println(String.format("Mean error:     %12.8f", meanError));
-	    System.out.println(String.format("Variance error: %12.8f", varianceError));
-	}
+            System.out.printf("Mean error:     %12.8f%n", meanError);
+            System.out.printf("Variance error: %12.8f%n", varianceError);
+        }
 
-	assertTrue(meanError     <= meanTolerance);
-	assertTrue(varianceError <= varianceTolerance);
+        assertTrue(meanError     <= meanTolerance);
+        assertTrue(varianceError <= varianceTolerance);
     }
 
     public void sampleTest(int sampleCount, 

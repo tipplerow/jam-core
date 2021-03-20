@@ -22,6 +22,7 @@ import com.tipplerow.jam.math.DoubleComparator;
 import com.tipplerow.jam.math.IntRange;
 import com.tipplerow.jam.math.JamRandom;
 import com.tipplerow.jam.math.Probability;
+import com.tipplerow.jam.vector.VectorView;
 
 /**
  * Represents a discrete cumulative probability distribution function (CDF).
@@ -30,7 +31,7 @@ import com.tipplerow.jam.math.Probability;
  */
 public final class DiscreteCDF extends DiscreteDistributionFunction {
     private DiscreteCDF(IntRange support, double[] values) {
-        super(support, values);
+        super(support, VectorView.of(values));
         validate(values);
     }
 
@@ -168,11 +169,11 @@ public final class DiscreteCDF extends DiscreteDistributionFunction {
      * @return the PDF corresponding to this cumulative distribution.
      */
     public DiscretePDF pdf() {
-        double[] pdf = new double[values.length];
-        pdf[0] = values[0];
+        double[] pdf = new double[values.length()];
+        pdf[0] = values.get(0);
 
-        for (int k = 1; k < values.length; ++k)
-            pdf[k] = values[k] - values[k - 1];
+        for (int k = 1; k < values.length(); ++k)
+            pdf[k] = values.get(k) - values.get(k - 1);
 
         return DiscretePDF.create(support().lower(), pdf);
     }
@@ -208,23 +209,7 @@ public final class DiscreteCDF extends DiscreteDistributionFunction {
         return samples;
     }
 
-    /**
-     * Compares this distribution function to another, allowing for a
-     * specific floating-point tolerance.
-     *
-     * @param that the other distribution function.
-     *
-     * @param tolerance the floating-point tolerance.
-     *
-     * @return {@code true} iff this distribution function has the
-     * same support range as the input function and its values are
-     * equal within the specified tolerance.
-     */
-    public boolean equals(DiscreteCDF that, double tolerance) {
-        return equalsDistribution(that, tolerance);
-    }
-
     @Override public boolean equals(Object that) {
-        return (that instanceof DiscreteCDF) && equals((DiscreteCDF) that, DoubleComparator.DEFAULT_TOLERANCE);
+        return (that instanceof DiscreteCDF) && equalsDistribution((DiscreteCDF) that);
     }
 }

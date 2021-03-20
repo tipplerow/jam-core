@@ -17,8 +17,8 @@ package com.tipplerow.jam.dist;
 
 import com.tipplerow.jam.junit.NumericTestBase;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 public class RealDistributionTypeTest extends NumericTestBase {
     @Test public void testDiracDelta() {

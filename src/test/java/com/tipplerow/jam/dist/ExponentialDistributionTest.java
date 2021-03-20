@@ -15,8 +15,7 @@
  */
 package com.tipplerow.jam.dist;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import org.testng.annotations.Test;
 
 public class ExponentialDistributionTest extends RealDistributionTestBase {
     private static final double TOLERANCE = 1.0e-06;
@@ -65,21 +64,17 @@ public class ExponentialDistributionTest extends RealDistributionTestBase {
     }
 
     @Test public void testMoments() {
-	momentTest(dist1, 1000000, 0.001, 0.005, 0.005, false);
-	momentTest(dist2, 1000000, 0.001, 0.005, 0.005, false);
+        momentTest(dist1, 1000000, 0.001, 0.005, 0.005, false);
+        momentTest(dist2, 1000000, 0.001, 0.005, 0.005, false);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void testZeroRate() {
         new ExponentialDistribution(0.0);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void testNegativeRate() {
         new ExponentialDistribution(-1.0);
-    }
-
-    public static void main(String[] args) {
-        org.junit.runner.JUnitCore.main("jam.dist.ExponentialDistributionTest");
     }
 }

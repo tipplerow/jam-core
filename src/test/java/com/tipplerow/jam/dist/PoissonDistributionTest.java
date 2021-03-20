@@ -17,29 +17,29 @@ package com.tipplerow.jam.dist;
 
 import org.apache.commons.math3.random.Well44497b;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 public class PoissonDistributionTest extends DiscreteDistributionTestBase {
     private static final double TOLERANCE = 1.0e-12;
     private static final Well44497b RNG = new Well44497b(20171114);
 
-    private final jam.dist.PoissonDistribution jam1E2 = jam(1.0E-02);
-    private final jam.dist.PoissonDistribution jam1E3 = jam(1.0E-03);
-    private final jam.dist.PoissonDistribution jam1E4 = jam(1.0E-04);
+    private final com.tipplerow.jam.dist.PoissonDistribution jam1E2 = jam(1.0E-02);
+    private final com.tipplerow.jam.dist.PoissonDistribution jam1E3 = jam(1.0E-03);
+    private final com.tipplerow.jam.dist.PoissonDistribution jam1E4 = jam(1.0E-04);
 
-    private final jam.dist.PoissonDistribution jam005 = jam(0.5);
-    private final jam.dist.PoissonDistribution jam025 = jam(2.5);
-    private final jam.dist.PoissonDistribution jam095 = jam(9.5);
-    private final jam.dist.PoissonDistribution jam999 = jam(99.9);
+    private final com.tipplerow.jam.dist.PoissonDistribution jam005 = jam(0.5);
+    private final com.tipplerow.jam.dist.PoissonDistribution jam025 = jam(2.5);
+    private final com.tipplerow.jam.dist.PoissonDistribution jam095 = jam(9.5);
+    private final com.tipplerow.jam.dist.PoissonDistribution jam999 = jam(99.9);
 
     private final org.apache.commons.math3.distribution.PoissonDistribution apache005 = apache(0.5);
     private final org.apache.commons.math3.distribution.PoissonDistribution apache025 = apache(2.5);
     private final org.apache.commons.math3.distribution.PoissonDistribution apache095 = apache(9.5);
     private final org.apache.commons.math3.distribution.PoissonDistribution apache999 = apache(99.9);
 
-    private static jam.dist.PoissonDistribution jam(double mean) {
-        return jam.dist.PoissonDistribution.create(mean);
+    private static com.tipplerow.jam.dist.PoissonDistribution jam(double mean) {
+        return com.tipplerow.jam.dist.PoissonDistribution.create(mean);
     }
 
     private static org.apache.commons.math3.distribution.PoissonDistribution apache(double mean) {
@@ -60,7 +60,7 @@ public class PoissonDistributionTest extends DiscreteDistributionTestBase {
         compareCDF(jam999, apache999);
     }
 
-    private void compareCDF(jam.dist.PoissonDistribution jam,
+    private void compareCDF(com.tipplerow.jam.dist.PoissonDistribution jam,
                             org.apache.commons.math3.distribution.PoissonDistribution apache) {
         for (Integer k : jam.effectiveRange())
             assertEquals(jam.cdf(k), apache.cumulativeProbability(k), TOLERANCE);
@@ -73,7 +73,7 @@ public class PoissonDistributionTest extends DiscreteDistributionTestBase {
         comparePDF(jam999, apache999);
     }
 
-    private void comparePDF(jam.dist.PoissonDistribution jam,
+    private void comparePDF(com.tipplerow.jam.dist.PoissonDistribution jam,
                             org.apache.commons.math3.distribution.PoissonDistribution apache) {
         for (Integer k : jam.effectiveRange())
             assertEquals(jam.pdf(k), apache.probability(k), TOLERANCE);
@@ -108,9 +108,9 @@ public class PoissonDistributionTest extends DiscreteDistributionTestBase {
         effectiveRangeTest(jam(mean), 1.0e-09, false);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void testInvalidMean() {
-        jam.dist.PoissonDistribution.create(0.0);
+        com.tipplerow.jam.dist.PoissonDistribution.create(0.0);
     }
 
     @Test public void testMoments() {
@@ -128,7 +128,7 @@ public class PoissonDistributionTest extends DiscreteDistributionTestBase {
         DiscreteDistribution dist = 
             DiscreteDistributionType.parse("POISSON; 2.5");
 
-        assertTrue(dist instanceof jam.dist.PoissonDistribution);
+        assertTrue(dist instanceof com.tipplerow.jam.dist.PoissonDistribution);
         assertEquals(2.5, dist.mean(), TOLERANCE);
     }
 
@@ -137,9 +137,5 @@ public class PoissonDistributionTest extends DiscreteDistributionTestBase {
         sampleTest(100000, 0.05, 0.05, jam025, apache025);
         sampleTest(100000, 0.1,  0.1,  jam095, apache095);
         sampleTest(100000, 1.0,  5.0,  jam999, apache999);
-    }
-
-    public static void main(String[] args) {
-        org.junit.runner.JUnitCore.main("jam.dist.PoissonDistributionTest");
     }
 }

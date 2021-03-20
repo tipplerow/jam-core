@@ -20,6 +20,7 @@ import com.tipplerow.jam.math.DoubleComparator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.DoubleStream;
 import java.util.stream.Stream;
@@ -30,7 +31,7 @@ import java.util.stream.Stream;
  *
  * @author Scott Shaffer
  */
-public interface VectorView {
+public interface VectorView extends Iterable<Double> {
     /**
      * Returns the length of this vector.
      *
@@ -48,6 +49,26 @@ public interface VectorView {
      * @throws IndexOutOfBoundsException unless the index is valid.
      */
     double get(int index);
+
+    /**
+     * Compute the inner (dot) product of this vector and another.
+     *
+     * @param operand the vector operand.
+     *
+     * @return the inner (dot) product of this vector and the input vector.
+     *
+     * @throws RuntimeException unless the operand has the same length as
+     * this vector.
+     */
+    default double dot(VectorView operand) {
+        validateOperand(operand);
+        double result = 0.0;
+
+        for (int index = 0; index < length(); ++index)
+            result += this.get(index) * operand.get(index);
+
+        return result;
+    }
 
     /**
      * Performs an equality test between this vector and a bare array
@@ -112,6 +133,16 @@ public interface VectorView {
                 return false;
 
         return true;
+    }
+
+    /**
+     * Returns a read-only iterator over the values in this vector.
+     *
+     * @return a read-only iterator over the values in this vector.
+     */
+    @Override
+    default Iterator<Double> iterator() {
+        return new VectorIterator(this);
     }
 
     /**
@@ -203,6 +234,19 @@ public interface VectorView {
      */
     default Stream<VectorElement> streamNonZero() {
         return streamElements().filter(VectorElement::isNonZero);
+    }
+
+    /**
+     * Computes the product of this vector and a scalar quantity and
+     * returns the result in a new vector; this vector is unchanged.
+     *
+     * @param scalar the scalar multiplier.
+     *
+     * @return the product of this vector and the scalar multiplier
+     * in a new vector.
+     */
+    default JamVector times(double scalar) {
+        return JamVector.copyOf(this).multiply(scalar);
     }
 
     /**

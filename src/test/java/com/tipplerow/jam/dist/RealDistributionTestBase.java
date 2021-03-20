@@ -15,11 +15,11 @@
  */
 package com.tipplerow.jam.dist;
 
-import com.tipplerow.jam.junit.NumericTestBase;
-import com.tipplerow.jam.math.StatSummary;
+import com.tipplerow.jam.stat.StatSummary;
+import com.tipplerow.jam.testng.NumericTestBase;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 public abstract class RealDistributionTestBase extends NumericTestBase {
     protected RealDistributionTestBase() {

@@ -15,8 +15,8 @@
  */
 package com.tipplerow.jam.dist;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 public class UniformRealDistributionTest extends RealDistributionTestBase {
     private static final double TOLERANCE = 1.0e-12;
@@ -59,7 +59,7 @@ public class UniformRealDistributionTest extends RealDistributionTestBase {
 	momentTest(dist, 2000000, 0.0001, 0.002, 0.002, false);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void testInvalidRange() {
         new UniformRealDistribution(0.0, -1.0);
     }

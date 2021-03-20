@@ -201,7 +201,7 @@ public interface Stat {
      *
      * @throws RuntimeException if the variance is negative.
      */
-    static double toStdDev(double variance) {
+    static double toSD(double variance) {
         validateVariance(variance);
         return Math.sqrt(variance);
     }
@@ -209,15 +209,15 @@ public interface Stat {
     /**
      * Converts a standard deviation into a variance.
      *
-     * @param stdDev the standard deviation to convert.
+     * @param sdev the standard deviation to convert.
      *
      * @return the variance that corresponds to the standard deviation.
      *
      * @throws RuntimeException if the standard deviation is negative.
      */
-    static double toVariance(double stdDev) {
-        validateVariance(stdDev);
-        return stdDev * stdDev;
+    static double toVariance(double sdev) {
+        validateVariance(sdev);
+        return sdev * sdev;
     }
 
     /**

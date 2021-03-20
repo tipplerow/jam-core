@@ -15,10 +15,8 @@
  */
 package com.tipplerow.jam.dist;
 
-import java.util.HashMap;
-
-import org.junit.*;
-import static org.junit.Assert.*;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 public class EmpiricalDiscreteDistributionTest extends DiscreteDistributionTestBase {
     private final EmpiricalDiscreteDistribution dist =
@@ -53,7 +51,7 @@ public class EmpiricalDiscreteDistributionTest extends DiscreteDistributionTestB
     }
 
     @Test public void testStErr() {
-        assertEquals(0.451664, dist.sterr(), 0.000001);
+        assertEquals(0.451664, dist.stderr(), 0.000001);
     }
 
     @Test public void testVariance() {
@@ -67,9 +65,5 @@ public class EmpiricalDiscreteDistributionTest extends DiscreteDistributionTestB
     @Test public void testSupport() {
         assertEquals(1, dist.support().lower());
         assertEquals(5, dist.support().upper());
-    }
-
-    public static void main(String[] args) {
-        org.junit.runner.JUnitCore.main("jam.dist.EmpiricalDiscreteDistributionTest");
     }
 }

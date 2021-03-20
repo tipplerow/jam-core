@@ -15,10 +15,10 @@
  */
 package com.tipplerow.jam.dist;
 
-import com.tipplerow.jam.math.StatSummary;
+import com.tipplerow.jam.stat.StatSummary;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 public class LogUniformDistributionTest extends RealDistributionTestBase {
     private static final double TOLERANCE = 1.0e-06;
@@ -53,7 +53,7 @@ public class LogUniformDistributionTest extends RealDistributionTestBase {
         StatSummary summary = StatSummary.compute(dist.sample(random(), 1000000));
 
         assertEquals(3.339292, summary.getMean(), 0.05);
-        assertEquals(4.740041, summary.getSD(),   0.05);
+        assertEquals(4.740041, summary.getSdev(), 0.05);
     }
 
     public static void main(String[] args) {

@@ -15,26 +15,30 @@
  */
 package com.tipplerow.jam.vector;
 
-/**
- * Provides a base class for vector implementations.
- *
- * @author Scott Shaffer
- */
-abstract class VectorImpl implements VectorView {
-    abstract boolean isDense();
-    abstract VectorImpl copy();
-    abstract VectorImpl set(int index, double value);
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
-    VectorImpl daxpy(double a, VectorView x) {
-        validateOperand(x);
+final class VectorIterator implements Iterator<Double> {
+    private int index;
+    private final VectorView vector;
 
-        for (int index = 0; index < length(); ++index)
-            set(index, this.get(index) + a * x.get(index));
-
-        return this;
+    VectorIterator(VectorView vector) {
+        this.index  = 0;
+        this.vector = vector;
     }
 
-    final boolean isSparse() {
-        return !isDense();
+    @Override public boolean hasNext() {
+        return index < vector.length();
+    }
+
+    @Override public Double next() {
+        if (!hasNext())
+            throw new NoSuchElementException();
+
+        return vector.get(index++);
+    }
+
+    @Override public void remove() {
+        throw new UnsupportedOperationException();
     }
 }

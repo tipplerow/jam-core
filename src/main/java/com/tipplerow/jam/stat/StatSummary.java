@@ -15,6 +15,10 @@
  */
 package com.tipplerow.jam.stat;
 
+
+import java.util.Collection;
+import java.util.stream.DoubleStream;
+
 import com.tipplerow.jam.vector.VectorView;
 
 import lombok.Builder;
@@ -22,6 +26,8 @@ import lombok.Getter;
 import lombok.ToString;
 
 /**
+ * Encapsulates a common set of statistics for a data sample.
+ *
  * @author Scott Shaffer
  */
 @Builder @ToString
@@ -54,7 +60,7 @@ public final class StatSummary {
      * The standard deviation of the data set.
      */
     @Getter
-    private final double stdDev;
+    private final double sdev;
 
     /**
      * The third quartile in the data set.
@@ -77,6 +83,7 @@ public final class StatSummary {
                     .Q1(Double.NaN)
                     .median(Double.NaN)
                     .mean(Double.NaN)
+                    .sdev(Double.NaN)
                     .Q3(Double.NaN)
                     .max(Double.NaN)
                     .build();
@@ -88,7 +95,29 @@ public final class StatSummary {
      *
      * @return the statistical summary for the specified data set.
      */
+    public static StatSummary compute(Collection<? extends Number> data) {
+        return compute(data.stream().mapToDouble(Number::doubleValue));
+    }
+
+    /**
+     * Computes the statistical summary for a data set.
+     *
+     * @param data the data set to summarize.
+     *
+     * @return the statistical summary for the specified data set.
+     */
     public static StatSummary compute(double[] data) {
+        return compute(VectorView.of(data));
+    }
+
+    /**
+     * Computes the statistical summary for a data set.
+     *
+     * @param data the data set to summarize.
+     *
+     * @return the statistical summary for the specified data set.
+     */
+    public static StatSummary compute(DoubleStream data) {
         return compute(VectorView.of(data));
     }
 
@@ -124,10 +153,10 @@ public final class StatSummary {
             return EMPTY;
 
         double mean = sum / count;
-        double stdDev = Double.NaN;
+        double sdev = Double.NaN;
 
         if (count > 1)
-            stdDev = Stat.norm2(data.minus(mean)) / Math.sqrt(count - 1);
+            sdev = Stat.norm2(data.minus(mean)) / Math.sqrt(count - 1);
 
         QuantileCalculator calculator = QuantileCalculator.create(data);
 
@@ -135,7 +164,7 @@ public final class StatSummary {
                 .min(min)
                 .max(max)
                 .mean(mean)
-                .stdDev(stdDev)
+                .sdev(sdev)
                 .Q1(calculator.compute(Quantiles.Q1))
                 .Q3(calculator.compute(Quantiles.Q3))
                 .median(calculator.compute(Quantiles.MEDIAN))
@@ -147,6 +176,6 @@ public final class StatSummary {
      * @return the variance of the data set.
      */
     public double getVariance() {
-        return Stat.toVariance(stdDev);
+        return Stat.toVariance(sdev);
     }
 }

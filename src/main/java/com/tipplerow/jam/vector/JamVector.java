@@ -94,6 +94,46 @@ public final class JamVector implements VectorView {
     }
 
     /**
+     * Creates a vector by parsing a comma-delimited string.
+     *
+     * @param line a string contining the vector elements separated by
+     * commas.
+     *
+     * @return a new vector with the elements assigned from the given
+     * formatted string.
+     *
+     * @throws IllegalArgumentException unless the input string is
+     * properly formatted.
+     */
+    public static JamVector parseCSV(String line) {
+        return parse(line, ",");
+    }
+
+    /**
+     * Creates a vector by parsing a delimited string.
+     *
+     * @param line a string contining the vector elements separated by
+     * the given delimiter.
+     *
+     * @param delimiter the element delimiter.
+     *
+     * @return a new vector with the elements assigned from the given
+     * formatted string.
+     *
+     * @throws IllegalArgumentException unless the input string is
+     * properly formatted.
+     */
+    public static JamVector parse(String line, String delimiter) {
+        String[]  fields = line.split(delimiter);
+        JamVector vector = JamVector.dense(fields.length);
+
+        for (int k = 0; k < fields.length; k++)
+            vector.set(k, Double.parseDouble(fields[k]));
+
+        return vector;
+    }
+
+    /**
      * Creates a new dense vector with a fixed length having all elements
      * initialized to the same value, as in the R function {@code rep(x, n)}.
      *
@@ -146,27 +186,7 @@ public final class JamVector implements VectorView {
      * as this vector.
      */
     public JamVector add(VectorView operand) {
-        return combineInPlace(1.0, 1.0, operand);
-    }
-
-    /**
-     * Updates this vector with the linear combination {@code a * this + b * y}.
-     *
-     * @param a the scalar factor to apply to this vector.
-     * @param b the scalar factor to apply to the input vector.
-     * @param y the other vector in the linear combination.
-     *
-     * @return this vector, for operator chaining.
-     *
-     * @throws RuntimeException unless the input vector has the same length as this.
-     */
-    public JamVector combineInPlace(double a, double b, VectorView y) {
-        validateOperand(y);
-
-        for (int index = 0; index < length(); ++index)
-            set(index, a * this.get(index) + b * y.get(index));
-
-        return this;
+        return daxpy(1.0, operand);
     }
 
     /**
@@ -175,6 +195,24 @@ public final class JamVector implements VectorView {
      */
     public JamVector copy() {
         return new JamVector(impl.copy());
+    }
+
+    /**
+     * Updates this vector in place with the sum of this vector and the
+     * scalar multiple of another vector {@code (this + scalar * that)}.
+     *
+     * <p>The method name comes from the BLAS library function which
+     * performs the same operation.</p>
+     *
+     * @param scalar the scalar factor to multiply the input vector.
+     *
+     * @param that the vector operand to add to this vector.
+     *
+     * @return this vector, for operator chaining.
+     */
+    public JamVector daxpy(double scalar, VectorView that) {
+        impl = impl.daxpy(scalar, that);
+        return this;
     }
 
     /**
@@ -252,7 +290,7 @@ public final class JamVector implements VectorView {
      * as this vector.
      */
     public JamVector subtract(VectorView operand) {
-        return combineInPlace(1.0, -1.0, operand);
+        return daxpy(-1.0, operand);
     }
 
     /**

@@ -15,6 +15,7 @@
  */
 package com.tipplerow.jam.matrix;
 
+import com.tipplerow.jam.vector.JamVector;
 import com.tipplerow.jam.vector.VectorView;
 
 import java.util.Arrays;
@@ -113,6 +114,11 @@ public final class JamMatrix implements MatrixView {
     @Override
     public int nrow() {
         return impl.nrow();
+    }
+
+    @Override
+    public JamVector times(VectorView vector) {
+        return impl.times(vector);
     }
 
     @Override

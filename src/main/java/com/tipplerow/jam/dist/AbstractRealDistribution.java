@@ -39,25 +39,25 @@ public abstract class AbstractRealDistribution implements RealDistribution {
      *
      * @param mean the mean of a real distribution.
      *
-     * @param stdev the standard deviation of a real distribution.
+     * @param sdev the standard deviation of a real distribution.
      *
-     * @return the standard Z-score: {@code (x - mean) / stdev}.
+     * @return the standard Z-score: {@code (x - mean) / sdev}.
      */
-    public static double scoreZ(double x, double mean, double stdev) {
-        validateStDev(stdev);
-        return (x - mean) / stdev;
+    public static double scoreZ(double x, double mean, double sdev) {
+        validateSD(sdev);
+        return (x - mean) / sdev;
     }
 
     /**
      * Validates a standard deviation.
      *
-     * @param stdev the standard deviation to validate.
+     * @param sdev the standard deviation to validate.
      *
      * @throws IllegalArgumentException unless the standard deviation
      * is positive.
      */
-    public static void validateStDev(double stdev) {
-        if (stdev <= 0.0)
+    public static void validateSD(double sdev) {
+        if (sdev <= 0.0)
             throw new IllegalArgumentException("Non-positive standard deviation.");
     }
 
@@ -74,7 +74,7 @@ public abstract class AbstractRealDistribution implements RealDistribution {
 	return sampleSummary().getMedian();
     }
 
-    @Override public double stdev() {
+    @Override public double sdev() {
 	return Math.sqrt(variance());
     }
 

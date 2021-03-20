@@ -15,8 +15,8 @@
  */
 package com.tipplerow.jam.dist;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 public class LogNormalDistributionTest extends RealDistributionTestBase {
     private static final double TOLERANCE = 1.0e-06;
@@ -47,7 +47,7 @@ public class LogNormalDistributionTest extends RealDistributionTestBase {
 	momentTest(dist, 1000000, 0.0002, 0.0002, 0.04, false);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void testInvalidStDev() {
         new LogNormalDistribution(0.0, -1.0);
     }

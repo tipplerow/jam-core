@@ -28,7 +28,7 @@ import com.tipplerow.jam.math.JamRandom;
  */
 public final class NormalDistribution extends AbstractRealDistribution {
     private final double mean;
-    private final double stdev;
+    private final double sdev;
 
     /**
      * The standard normal distribution with zero mean and unit
@@ -41,15 +41,15 @@ public final class NormalDistribution extends AbstractRealDistribution {
      *
      * @param mean the mean of the distribution.
      *
-     * @param stdev the standard deviation of the distribution.
+     * @param sdev the standard deviation of the distribution.
      *
      * @throws IllegalArgumentException unless the standard deviation
      * is positive.
      */
-    public NormalDistribution(double mean, double stdev) {
-        validateStDev(stdev);
+    public NormalDistribution(double mean, double sdev) {
+        validateSD(sdev);
         this.mean = mean;
-        this.stdev = stdev;
+        this.sdev = sdev;
     }
 
     /**
@@ -60,7 +60,7 @@ public final class NormalDistribution extends AbstractRealDistribution {
      *
      * @param mean the mean of the distribution.
      *
-     * @param stdev the standard deviation of the distribution.
+     * @param sdev the standard deviation of the distribution.
      *
      * @return the cumulative distribution function for a normal
      * distribution with the given mean and standard deviation.
@@ -68,13 +68,13 @@ public final class NormalDistribution extends AbstractRealDistribution {
      * @throws IllegalArgumentException unless the standard deviation
      * is positive.
      */
-    public static double cdf(double x, double mean, double stdev) {
-        validateStDev(stdev);
-        return validCDF(x, mean, stdev);
+    public static double cdf(double x, double mean, double sdev) {
+        validateSD(sdev);
+        return validCDF(x, mean, sdev);
     }
 
-    private static double validCDF(double x, double mean, double stdev) {
-        return 0.5 * (1.0 + Erf.erf(scoreZ(x, mean, stdev) / DoubleUtil.SQRT2));
+    private static double validCDF(double x, double mean, double sdev) {
+        return 0.5 * (1.0 + Erf.erf(scoreZ(x, mean, sdev) / DoubleUtil.SQRT2));
     }
 
     /**
@@ -85,7 +85,7 @@ public final class NormalDistribution extends AbstractRealDistribution {
      *
      * @param mean the mean of the distribution.
      *
-     * @param stdev the standard deviation of the distribution.
+     * @param sdev the standard deviation of the distribution.
      *
      * @return the probability density function for a normal
      * distribution with the given mean and standard deviation.
@@ -93,42 +93,42 @@ public final class NormalDistribution extends AbstractRealDistribution {
      * @throws IllegalArgumentException unless the standard deviation
      * is positive.
      */
-    public static double pdf(double x, double mean, double stdev) {
-        validateStDev(stdev);
-        return validPDF(x, mean, stdev);
+    public static double pdf(double x, double mean, double sdev) {
+        validateSD(sdev);
+        return validPDF(x, mean, sdev);
     }
 
-    private static double validPDF(double x, double mean, double stdev) {
-        double z = scoreZ(x, mean, stdev);
-        return Math.exp(-0.5 * z * z) / (stdev * DoubleUtil.SQRT_TWO_PI);
+    private static double validPDF(double x, double mean, double sdev) {
+        double z = scoreZ(x, mean, sdev);
+        return Math.exp(-0.5 * z * z) / (sdev * DoubleUtil.SQRT_TWO_PI);
     }
 
     @Override public double cdf(double x) {
-        return validCDF(x, mean, stdev);
+        return validCDF(x, mean, sdev);
     }
 
     @Override public double pdf(double x) {
-        return validPDF(x, mean, stdev);
+        return validPDF(x, mean, sdev);
     }
 
     public double quantile(double F) {
-        return mean + DoubleUtil.SQRT2 * stdev * Erf.erfInv(2.0 * F - 1.0);
+        return mean + DoubleUtil.SQRT2 * sdev * Erf.erfInv(2.0 * F - 1.0);
     }
 
     @Override public double mean() {
-	return mean;
+        return mean;
     }
 
     @Override public double median() {
-	return mean;
+        return mean;
     }
 
     @Override public double variance() {
-	return stdev * stdev;
+        return sdev * sdev;
     }
 
     @Override public double sample(JamRandom source) {
-        return source.nextGaussian(mean, stdev);
+        return source.nextGaussian(mean, sdev);
     }
 
     @Override public DoubleRange support() {

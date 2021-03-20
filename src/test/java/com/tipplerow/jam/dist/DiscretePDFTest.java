@@ -15,27 +15,14 @@
  */
 package com.tipplerow.jam.dist;
 
-import com.tipplerow.jam.junit.NumericTestBase;
+import com.tipplerow.jam.testng.NumericTestBase;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 public class DiscretePDFTest extends NumericTestBase {
     private final DiscretePDF dist =
         DiscretePDF.compute(1, 2, 3, 5, 2, 3, 5, 3, 5, 5);
-
-    @Test public void testEquals() {
-        DiscretePDF pdf1 = DiscretePDF.create(0, new double[] { 0.1, 0.2, 0.3, 0.4 });
-        DiscretePDF pdf2 = DiscretePDF.create(0, new double[] { 0.1, 0.2, 0.2999, 0.4001 });
-        DiscretePDF pdf3 = DiscretePDF.create(5, new double[] { 0.1, 0.2, 0.3, 0.4 });
-
-        assertFalse(pdf1.equals(pdf2));
-        assertFalse(pdf1.equals(pdf3));
-
-        assertTrue(pdf1.equals(pdf2, 0.001));
-        assertFalse(pdf1.equals(pdf2, 0.00001));
-        assertFalse(pdf1.equals(pdf3, 0.1));
-    }
 
     @Test public void testEvaluate() {
         assertDouble(0.0, dist.evaluate(0));
@@ -73,12 +60,8 @@ public class DiscretePDFTest extends NumericTestBase {
         assertDouble(0.0, pdf.evaluate(13));
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test(expectedExceptions = RuntimeException.class)
     public void testExplicitInvalid() {
         DiscretePDF pdf = DiscretePDF.create(10, new double[] { 0.2, 0.3, 0.5, 0.1 });
-    }
-
-    public static void main(String[] args) {
-        org.junit.runner.JUnitCore.main("jam.dist.DiscretePDFTest");
     }
 }
