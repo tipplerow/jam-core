@@ -16,7 +16,6 @@
 package com.tipplerow.jam.dist;
 
 import org.testng.annotations.Test;
-import static org.testng.Assert.*;
 
 public class NormalDistributionTest extends RealDistributionTestBase {
     private static final double TOLERANCE = 1.0e-06;
@@ -50,9 +49,5 @@ public class NormalDistributionTest extends RealDistributionTestBase {
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void testInvalidStDev() {
         new NormalDistribution(0.0, -1.0);
-    }
-
-    public static void main(String[] args) {
-        org.junit.runner.JUnitCore.main("jam.dist.NormalDistributionTest");
     }
 }

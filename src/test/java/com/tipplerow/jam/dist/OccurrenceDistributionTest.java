@@ -104,8 +104,4 @@ public class OccurrenceDistributionTest extends DiscreteDistributionTestBase {
         assertDouble(0.2, dist.getEventProb().doubleValue());
         assertEquals(4, dist.getTrialCount());
     }
-
-    public static void main(String[] args) {
-        org.junit.runner.JUnitCore.main("jam.dist.OccurrenceDistributionTest");
-    }
 }
