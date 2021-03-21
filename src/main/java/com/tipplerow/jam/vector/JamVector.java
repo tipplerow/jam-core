@@ -157,7 +157,7 @@ public final class JamVector implements VectorView {
      *
      * @return a new vector using the specified array as the underlying storage.
      */
-    public static JamVector wrap(double[] array) {
+    public static JamVector wrap(double... array) {
         return new JamVector(new DenseApacheImpl(new ArrayRealVector(array, false)));
     }
 
@@ -170,8 +170,21 @@ public final class JamVector implements VectorView {
      */
     public JamVector add(double scalar) {
         for (int index = 0; index < length(); ++index)
-            set(index, get(index) + scalar);
+            add(index, scalar);
 
+        return this;
+    }
+
+    /**
+     * Adds a scalar value to an element in this vector (in place).
+     *
+     * @param index  the index of the element to alter.
+     * @param scalar the scalar value to add.
+     *
+     * @return this vector, for operator chaining.
+     */
+    public JamVector add(int index, double scalar) {
+        set(index, get(index) + scalar);
         return this;
     }
 
@@ -235,8 +248,21 @@ public final class JamVector implements VectorView {
      */
     public JamVector multiply(double scalar) {
         for (int index = 0; index < length(); ++index)
-            set(index, scalar * get(index));
+            multiply(index, scalar);
 
+        return this;
+    }
+
+    /**
+     * Multiplies an element in this vector by a scalar factor (in place).
+     *
+     * @param index  the index of the element to alter.
+     * @param scalar the scalar multiplier.
+     *
+     * @return this vector, for operator chaining.
+     */
+    public JamVector multiply(int index, double scalar) {
+        set(index, scalar * get(index));
         return this;
     }
 

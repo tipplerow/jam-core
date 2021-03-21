@@ -23,7 +23,7 @@ import static org.testng.Assert.*;
 
 public class OccurrenceDistributionTest extends DiscreteDistributionTestBase {
     @Test public void test0() {
-        OccurrenceDistribution dist = new OccurrenceDistribution(Probability.valueOf(0.95), 0);
+        OccurrenceDistribution dist = new OccurrenceDistribution(Probability.of(0.95), 0);
 
         assertDouble(1.0, dist.exactly(0));
 
@@ -37,7 +37,7 @@ public class OccurrenceDistributionTest extends DiscreteDistributionTestBase {
     }
 
     @Test public void test1() {
-        OccurrenceDistribution dist = new OccurrenceDistribution(Probability.valueOf(0.25), 1);
+        OccurrenceDistribution dist = new OccurrenceDistribution(Probability.of(0.25), 1);
 
         assertDouble(0.75, dist.exactly(0));
         assertDouble(0.25, dist.exactly(1));
@@ -54,7 +54,7 @@ public class OccurrenceDistributionTest extends DiscreteDistributionTestBase {
     }
 
     @Test public void test2() {
-        OccurrenceDistribution dist = new OccurrenceDistribution(Probability.valueOf(0.7), 2);
+        OccurrenceDistribution dist = new OccurrenceDistribution(Probability.of(0.7), 2);
 
         assertDouble(0.09, dist.exactly(0));
         assertDouble(0.42, dist.exactly(1));
@@ -75,7 +75,7 @@ public class OccurrenceDistributionTest extends DiscreteDistributionTestBase {
 
     @Test public void test6() {
         double tol = 1.0e-10;
-        OccurrenceDistribution dist = new OccurrenceDistribution(Probability.valueOf(0.25), 6);
+        OccurrenceDistribution dist = new OccurrenceDistribution(Probability.of(0.25), 6);
 
         assertEquals(0.1779785156, dist.exactly(0), tol);
         assertEquals(0.3559570312, dist.exactly(1), tol);
@@ -91,7 +91,7 @@ public class OccurrenceDistributionTest extends DiscreteDistributionTestBase {
         double prob  = 0.9;
         double tol   = 1.0e-12;
 
-        OccurrenceDistribution dist = new OccurrenceDistribution(Probability.valueOf(prob), count);
+        OccurrenceDistribution dist = new OccurrenceDistribution(Probability.of(prob), count);
 
         for (int k = 0; k <= count; ++k)
             assertEquals(Math.pow(prob, k) * Math.pow(1.0 - prob, count - k) * Factorial.choose(count, k), dist.exactly(k), tol);

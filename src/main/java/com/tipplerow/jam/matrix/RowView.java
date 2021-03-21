@@ -19,6 +19,11 @@ import com.tipplerow.jam.vector.VectorView;
 
 import lombok.NonNull;
 
+/**
+ * Provides a shallow view of a single row in a matrix.
+ *
+ * @author Scott Shaffer
+ */
 final class RowView implements VectorView {
     @NonNull
     private final MatrixView matrix;

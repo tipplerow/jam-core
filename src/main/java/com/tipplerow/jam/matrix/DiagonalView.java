@@ -15,34 +15,34 @@
  */
 package com.tipplerow.jam.matrix;
 
+import com.tipplerow.jam.lang.JamException;
 import com.tipplerow.jam.vector.VectorView;
 
 import lombok.NonNull;
 
 /**
- * Provides a shallow view of a single column in a matrix.
+ * Provides a shallow view of the diagonal entries in a matrix.
  *
  * @author Scott Shaffer
  */
-final class ColumnView implements VectorView {
+final class DiagonalView implements VectorView {
     @NonNull
     private final MatrixView matrix;
 
-    private final int colind;
+    private DiagonalView(MatrixView matrix) {
+        if (!matrix.isSquare())
+            throw JamException.runtime("Matrix is not square.");
 
-    private ColumnView(MatrixView matrix, int colind) {
         this.matrix = matrix;
-        this.colind = colind;
-        matrix.validateColumn(colind);
     }
 
-    static ColumnView of(MatrixView matrix, int colind) {
-        return new ColumnView(matrix, colind);
+    static DiagonalView of(MatrixView matrix) {
+        return new DiagonalView(matrix);
     }
 
     @Override
-    public double get(int rowind) {
-        return matrix.get(rowind, colind);
+    public double get(int index) {
+        return matrix.get(index, index);
     }
 
     @Override

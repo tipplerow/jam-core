@@ -15,10 +15,9 @@
  */
 package com.tipplerow.jam.dist;
 
-import com.tipplerow.jam.junit.NumericTestBase;
+import com.tipplerow.jam.testng.NumericTestBase;
 
 import org.testng.annotations.Test;
-import static org.testng.Assert.*;
 
 public class RealDistributionTypeTest extends NumericTestBase {
     @Test public void testDiracDelta() {
@@ -48,8 +47,8 @@ public class RealDistributionTypeTest extends NumericTestBase {
         NormalDistribution dist1 = new NormalDistribution(-1.0, 3.0);
         NormalDistribution dist2 = (NormalDistribution) RealDistributionType.parse("NORMAL; -1.0, 3.0");
 
-        assertDouble(dist1.mean(),  dist2.mean());
-        assertDouble(dist1.stdev(), dist2.stdev());
+        assertDouble(dist1.mean(), dist2.mean());
+        assertDouble(dist1.sdev(), dist2.sdev());
     }
 
     @Test public void testUniform() {
@@ -58,9 +57,5 @@ public class RealDistributionTypeTest extends NumericTestBase {
 
         assertDouble(dist1.getLower(), dist2.getLower());
         assertDouble(dist1.getUpper(), dist2.getUpper());
-    }
-
-    public static void main(String[] args) {
-        org.junit.runner.JUnitCore.main("jam.dist.RealDistributionTypeTest");
     }
 }

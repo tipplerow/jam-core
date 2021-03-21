@@ -13,30 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tipplerow.jam.matrix;
+package com.tipplerow.jam.collect;
 
-import com.tipplerow.jam.vector.JamVector;
-import com.tipplerow.jam.vector.VectorView;
+import java.util.Collection;
 
 /**
+ * Provides static utility methods operating on collections.
+ *
  * @author Scott Shaffer
  */
-abstract class MatrixImpl implements MatrixView {
-    abstract boolean isDense();
-    //abstract MatrixImpl copy();
-    abstract MatrixImpl set(int row, int col, double value);
-
-    MatrixImpl daxpy(double a, MatrixView x) {
-        validateAddend(x);
-
-        for (int row = 0; row < nrow(); ++row)
-            for (int col = 0; col < ncol(); ++col)
-                set(row, col, this.get(row, col) + a * x.get(row, col));
-
-        return this;
-    }
-
-    final boolean isSparse() {
-        return !isDense();
+public final class JamCollections {
+    /**
+     * Returns the first element of a collection (or {@code null} if the
+     * collection is empty).
+     *
+     * @param collection the collection to peek at.
+     *
+     * @return the first element of a collection (or {@code null} if the
+     * collection is empty).
+     */
+    public static <T> T peek(Collection<T> collection) {
+        if (collection.isEmpty())
+            return null;
+        else
+            return collection.iterator().next();
     }
 }

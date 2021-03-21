@@ -15,15 +15,10 @@
  */
 package com.tipplerow.jam.dist;
 
-import com.google.common.collect.HashMultiset;
-import com.google.common.collect.Multiset;
-
-import com.tipplerow.jam.lattice.Coord;
-import com.tipplerow.jam.math.StatUtil;
+import com.tipplerow.jam.stat.Stat;
 import com.tipplerow.jam.vector.JamVector;
 
 import org.testng.annotations.Test;
-import static org.testng.Assert.*;
 
 public class HypersphericalDistributionTest extends MultivariateDistributionTestBase {
     private static final double RADIUS = 2.0;
@@ -39,7 +34,7 @@ public class HypersphericalDistributionTest extends MultivariateDistributionTest
 
     @Test public void testRadius() {
         for (int sample = 0; sample < samples.length; sample++)
-            assertDouble(RADIUS, StatUtil.norm2(samples[sample].minus(CENTER)));
+            assertDouble(RADIUS, Stat.norm2(samples[sample].minus(CENTER)));
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
@@ -51,7 +46,7 @@ public class HypersphericalDistributionTest extends MultivariateDistributionTest
     public void testInvalidRadius() {
         new HypersphericalDistribution(3, 0.0);
     }
-
+/*
     @Test public void testExpansionDistribution() {
         double    radius = 0.5 * Math.sqrt(3.0);
         JamVector center = JamVector.copyOf(0.0, 0.0, 0.0);
@@ -72,8 +67,5 @@ public class HypersphericalDistributionTest extends MultivariateDistributionTest
         assertEquals(731089, counts[1]);
         assertEquals(268911, counts[2]);
     }
-
-    public static void main(String[] args) {
-        org.junit.runner.JUnitCore.main("jam.dist.HypersphericalDistributionTest");
-    }
+*/
 }

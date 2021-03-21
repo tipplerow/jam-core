@@ -18,7 +18,7 @@ package com.tipplerow.jam.dist;
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
 
-import com.tipplerow.jam.util.MultisetUtil;
+import com.tipplerow.jam.collect.JamMultisets;
 
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
@@ -72,10 +72,10 @@ public class UniformDiscreteDistributionTest extends DiscreteDistributionTestBas
         for (int trial = 0; trial < 100000; ++trial)
             samples.add(dist.sample());
 
-        assertEquals(0.25, MultisetUtil.frequency(samples, -1), 0.01);
-        assertEquals(0.25, MultisetUtil.frequency(samples,  0), 0.01);
-        assertEquals(0.25, MultisetUtil.frequency(samples,  1), 0.01);
-        assertEquals(0.25, MultisetUtil.frequency(samples,  2), 0.01);
+        assertEquals(0.25, JamMultisets.frequency(samples, -1), 0.01);
+        assertEquals(0.25, JamMultisets.frequency(samples,  0), 0.01);
+        assertEquals(0.25, JamMultisets.frequency(samples,  1), 0.01);
+        assertEquals(0.25, JamMultisets.frequency(samples,  2), 0.01);
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
@@ -86,9 +86,5 @@ public class UniformDiscreteDistributionTest extends DiscreteDistributionTestBas
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void testInvalidRange2() {
         new UniformDiscreteDistribution(1, 1);
-    }
-
-    public static void main(String[] args) {
-        org.junit.runner.JUnitCore.main("jam.dist.UniformDiscreteDistributionTest");
     }
 }

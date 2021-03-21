@@ -220,6 +220,23 @@ public interface MatrixView {
     }
 
     /**
+     * Returns the sum of the diagonal values of this square matrix.
+     * @return the sum of the diagonal values of this square matrix.
+     * @throws RuntimeException unless this is a square matrix.
+     */
+    default double trace() {
+        if (!isSquare())
+            throw JamException.runtime("Matrix trace requires a square matrix.");
+
+        double result = 0.0;
+
+        for (int index = 0; index < nrow(); ++index)
+            result += get(index, index);
+
+        return result;
+    }
+
+    /**
      * Returns the elements of this matrix in new bare array.
      *
      * @return the elements of this matrix in new bare array.
@@ -237,6 +254,19 @@ public interface MatrixView {
         }
 
         return rows;
+    }
+
+    /**
+     * Ensures that a matrix addend has the same shape as this matrix.
+     *
+     * @param addend the matrix addend to validate.
+     *
+     * @throws RuntimeException unless the addend has the same shape as
+     * this matrix.
+     */
+    default void validateAddend(MatrixView addend) {
+        if (addend.nrow() != this.nrow() || addend.ncol() != this.ncol())
+            throw JamException.runtime("Matrix addend shape mismatch.");
     }
 
     /**
@@ -274,6 +304,17 @@ public interface MatrixView {
      */
     default VectorView viewColumn(int col) {
         return ColumnView.of(this, col);
+    }
+
+    /**
+     * Returns a VectorView of the diagonal elements in this square matrix.
+     *
+     * @return a VectorView of the diagonal elements in this square matrix.
+     *
+     * @throws RuntimeException unless this is a square matrix.
+     */
+    default VectorView viewDiagonal() {
+        return DiagonalView.of(this);
     }
 
     /**

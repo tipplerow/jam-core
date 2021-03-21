@@ -15,9 +15,6 @@
  */
 package com.tipplerow.jam.matrix;
 
-import com.tipplerow.jam.vector.JamVector;
-import com.tipplerow.jam.vector.VectorView;
-
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.BlockRealMatrix;
 
@@ -50,10 +47,5 @@ class DenseApacheImpl extends ApacheImpl {
     MatrixImpl set(int row, int col, double value) {
         matrix.setEntry(row, col, value);
         return this;
-    }
-
-    @Override
-    JamVector times(VectorView vector) {
-        return JamVector.wrap(matrix.operate(vector.toArray()));
     }
 }

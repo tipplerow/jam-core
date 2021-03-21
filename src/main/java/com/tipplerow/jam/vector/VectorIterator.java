@@ -18,6 +18,11 @@ package com.tipplerow.jam.vector;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+/**
+ * Provides read-only iteration over the elements of a vector.
+ *
+ * @author Scott Shaffer
+ */
 final class VectorIterator implements Iterator<Double> {
     private int index;
     private final VectorView vector;

@@ -16,6 +16,7 @@
 package com.tipplerow.jam.matrix;
 
 import com.tipplerow.jam.math.DoubleComparator;
+
 import org.apache.commons.math3.linear.DiagonalMatrix;
 import org.apache.commons.math3.linear.OpenMapRealMatrix;
 

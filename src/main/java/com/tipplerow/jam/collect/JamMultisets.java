@@ -13,30 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tipplerow.jam.matrix;
+package com.tipplerow.jam.collect;
 
-import com.tipplerow.jam.vector.JamVector;
-import com.tipplerow.jam.vector.VectorView;
+import com.google.common.collect.Multiset;
 
 /**
+ * Provides static utility methods operating on Multisets.
+ *
  * @author Scott Shaffer
  */
-abstract class MatrixImpl implements MatrixView {
-    abstract boolean isDense();
-    //abstract MatrixImpl copy();
-    abstract MatrixImpl set(int row, int col, double value);
-
-    MatrixImpl daxpy(double a, MatrixView x) {
-        validateAddend(x);
-
-        for (int row = 0; row < nrow(); ++row)
-            for (int col = 0; col < ncol(); ++col)
-                set(row, col, this.get(row, col) + a * x.get(row, col));
-
-        return this;
-    }
-
-    final boolean isSparse() {
-        return !isDense();
+public class JamMultisets {
+    /**
+     * Computes the frequency at which an items appears in a multiset.
+     *
+     * @param set the multiset to examine.
+     * @param key the key to search for.
+     *
+     * @return the frequency at which the specified item appears in
+     * the multiset: {@code set.count(key) / ((double) set.size())}.
+     */
+    public static <T> double frequency(Multiset<T> set, T key) {
+        return set.count(key) / ((double) set.size());
     }
 }

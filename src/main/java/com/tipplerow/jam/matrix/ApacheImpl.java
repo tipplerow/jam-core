@@ -28,22 +28,22 @@ abstract class ApacheImpl extends MatrixImpl {
     }
 
     @Override
-    double get(int row, int col) {
+    public double get(int row, int col) {
         return matrix.getEntry(row, col);
     }
 
     @Override
-    int ncol() {
+    public int ncol() {
         return matrix.getColumnDimension();
     }
 
     @Override
-    int nrow() {
+    public int nrow() {
         return matrix.getRowDimension();
     }
 
     @Override
-    double[][] toArray() {
+    public double[][] toArray() {
         return matrix.getData();
     }
 }

@@ -51,7 +51,7 @@ public class DomainDoubleTest {
         VectorView view1 = DomainDouble.asVectorView(array);
         VectorView view2 = VectorView.of(1.0, 2.0, 3.0);
 
-        assertTrue(view1.equals(view2));
+        assertEquals(view1, view2);
     }
 
     @Test public void testCompareTo() {

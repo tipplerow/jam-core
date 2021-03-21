@@ -15,7 +15,6 @@
  */
 package com.tipplerow.jam.dist;
 
-import com.tipplerow.jam.math.VectorMoment;
 import com.tipplerow.jam.matrix.JamMatrix;
 import com.tipplerow.jam.vector.JamVector;
 
@@ -23,21 +22,21 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 public class IIDNormalDistributionTest extends MultivariateDistributionTestBase {
-    private static final int    NVAR  =  3;
-    private static final double MEAN  = -1.0;
-    private static final double STDEV =  0.5;
+    private static final int    NVAR =  3;
+    private static final double MEAN = -1.0;
+    private static final double SDEV =  0.5;
 
     private final JamVector expectedMean = 
-        JamVector.valueOf(MEAN, MEAN, MEAN);
+        JamVector.wrap(MEAN, MEAN, MEAN);
 
     private final JamMatrix expectedCovar =
         JamMatrix.byrow(3, 3,
-                        STDEV * STDEV, 0.0, 0.0,
-                        0.0, STDEV * STDEV, 0.0,
-                        0.0, 0.0, STDEV * STDEV);
+                        SDEV * SDEV, 0.0, 0.0,
+                        0.0, SDEV * SDEV, 0.0,
+                        0.0, 0.0, SDEV * SDEV);
 
     public IIDNormalDistributionTest() {
-        super(new IIDNormalDistribution(NVAR, MEAN, STDEV));
+        super(new IIDNormalDistribution(NVAR, MEAN, SDEV));
     }
 
     @Test public void testDim() {

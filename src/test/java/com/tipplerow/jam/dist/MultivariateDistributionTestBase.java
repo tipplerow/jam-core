@@ -15,6 +15,7 @@
  */
 package com.tipplerow.jam.dist;
 
+import com.tipplerow.jam.math.DoubleComparator;
 import com.tipplerow.jam.math.VectorMoment;
 import com.tipplerow.jam.vector.JamVector;
 import com.tipplerow.jam.testng.NumericTestBase;
@@ -49,7 +50,7 @@ public abstract class MultivariateDistributionTestBase extends NumericTestBase {
             System.out.println(dist.covar());
         }
 
-        assertTrue(moment.getCM().equalsVector(dist.mean(),  tolCM));
-        assertTrue(moment.getRG().equalsMatrix(dist.covar(), tolRG));
+        assertTrue(moment.getCM().equalsVector(dist.mean(), new DoubleComparator(tolCM)));
+        assertTrue(moment.getRG().equalsMatrix(dist.covar(), new DoubleComparator(tolRG)));
     }
 }

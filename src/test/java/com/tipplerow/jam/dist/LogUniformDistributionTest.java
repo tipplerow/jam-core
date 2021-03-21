@@ -55,8 +55,4 @@ public class LogUniformDistributionTest extends RealDistributionTestBase {
         assertEquals(3.339292, summary.getMean(), 0.05);
         assertEquals(4.740041, summary.getSdev(), 0.05);
     }
-
-    public static void main(String[] args) {
-        org.junit.runner.JUnitCore.main("jam.dist.LogUniformDistributionTest");
-    }
 }
