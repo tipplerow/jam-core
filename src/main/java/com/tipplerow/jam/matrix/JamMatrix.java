@@ -19,6 +19,7 @@ import com.tipplerow.jam.vector.JamVector;
 import com.tipplerow.jam.vector.VectorView;
 
 import java.util.Arrays;
+import java.util.Collection;
 
 /**
  * Represents a two-dimensional matrix, provides basic operations from
@@ -56,6 +57,51 @@ public final class JamMatrix implements MatrixView {
                 result.set(i, j, elements[j + i * ncol]);
 
         return result;
+    }
+
+    /**
+     * Creates a new matrix by stacking column vectors of equal length from
+     * left to right.
+     *
+     * @param cols the columns to stack.
+     *
+     * @return a new matrix where column {@code k} is equal to {@code cols[k]}.
+     *
+     * @throws IllegalArgumentException unless there is at least one column
+     * and all columns have the same (positive) length.
+     */
+    public static JamMatrix cbind(VectorView... cols) {
+        if (cols.length < 1)
+            throw new IllegalArgumentException("At least one column is required.");
+
+        if (cols[0].length() < 1)
+            throw new IllegalArgumentException("Columns must have positive length.");
+
+        int nrow = cols[0].length();
+        int ncol = cols.length;
+
+        JamMatrix result = dense(nrow, ncol);
+
+        for (int col = 0; col < ncol; col++)
+            result.setColumn(col, cols[col]);
+
+        return result;
+    }
+
+    /**
+     * Creates a new matrix by stacking column vectors of equal length from
+     * left to right.
+     *
+     * @param cols the columns to stack.
+     *
+     * @return a new matrix where column {@code k} is equal to the {@code k}th
+     * vector returned by the collection iterator.
+     *
+     * @throws IllegalArgumentException unless there is at least one column
+     * and all columns have the same (positive) length.
+     */
+    public static JamMatrix cbind(Collection<VectorView> cols) {
+        return cbind(cols.toArray(new VectorView[0]));
     }
 
     /**
@@ -148,6 +194,51 @@ public final class JamMatrix implements MatrixView {
      */
     public static JamMatrix identity(int dimension) {
         return diag(JamVector.ones(dimension));
+    }
+
+    /**
+     * Creates a new matrix by stacking row vectors of equal length from
+     * top to bottom.
+     *
+     * @param rows the rows to stack.
+     *
+     * @return a new matrix where row {@code k} is equal to {@code rows[k]}.
+     *
+     * @throws IllegalArgumentException unless there is at least one row
+     * and all rows have the same (positive) length.
+     */
+    public static JamMatrix rbind(VectorView... rows) {
+        if (rows.length < 1)
+            throw new IllegalArgumentException("At least one row is required.");
+
+        if (rows[0].length() < 1)
+            throw new IllegalArgumentException("Rows must have positive length.");
+
+        int nrow = rows.length;
+        int ncol = rows[0].length();
+
+        JamMatrix result = JamMatrix.dense(nrow, ncol);
+
+        for (int row = 0; row < nrow; row++)
+            result.setRow(row, rows[row]);
+
+        return result;
+    }
+
+    /**
+     * Creates a new matrix by stacking row vectors of equal length from
+     * top to bottom.
+     *
+     * @param rows the rows to stack.
+     *
+     * @return a new matrix where row {@code k} is equal to the {@code k}th
+     * vector returned by the collection iterator.
+     *
+     * @throws IllegalArgumentException unless there is at least one row
+     * and all rows have the same (positive) length.
+     */
+    public static JamMatrix rbind(Collection<? extends VectorView> rows) {
+        return rbind(rows.toArray(new VectorView[0]));
     }
 
     /**
@@ -275,6 +366,40 @@ public final class JamMatrix implements MatrixView {
      */
     public void set(int row, int col, double value) {
         impl = impl.set(row, col, value);
+    }
+
+    /**
+     * Assigns values to a column in this matrix.
+     *
+     * @param colIndex  the index of the column to assign.
+     * @param colValues the column vector to assign.
+     *
+     * @throws IllegalArgumentException unless the length of the
+     * column vector matches the number of rows in this matrix.
+     */
+    public void setColumn(int colIndex, VectorView colValues) {
+        if (colValues.length() != nrow())
+            throw new IllegalArgumentException("Column vector length mismatch.");
+
+        for (int rowIndex = 0; rowIndex < nrow(); rowIndex++)
+            set(rowIndex, colIndex, colValues.get(rowIndex));
+    }
+
+    /**
+     * Assigns values to a row in this matrix.
+     *
+     * @param rowIndex  the index of the row to assign.
+     * @param rowValues the row vector to assign.
+     *
+     * @throws IllegalArgumentException unless the length of the
+     * row vector matches the number of columns in this matrix.
+     */
+    public void setRow(int rowIndex, VectorView rowValues) {
+        if (rowValues.length() != ncol())
+            throw new IllegalArgumentException("Row vector length mismatch.");
+
+        for (int colIndex = 0; colIndex < ncol(); colIndex++)
+            set(rowIndex, colIndex, rowValues.get(colIndex));
     }
 
     @Override
