@@ -16,6 +16,7 @@
 package com.tipplerow.jam.matrix;
 
 import com.tipplerow.jam.lang.JamException;
+import com.tipplerow.jam.linalg.JamSVD;
 import com.tipplerow.jam.math.DoubleComparator;
 import com.tipplerow.jam.vector.JamVector;
 import com.tipplerow.jam.vector.VectorView;
@@ -122,6 +123,19 @@ public interface MatrixView {
                     return false;
 
         return true;
+    }
+
+    /**
+     * Computes the (generalized) inverse of this matrix and returns the
+     * result in a new JamMatrix.
+     *
+     * @return the inverse of this matrix (or a generalized inverse if
+     * this matrix is not square).
+     *
+     * @throws RuntimeException if this matrix is numerically singular.
+     */
+    default JamMatrix inverse() {
+        return JamSVD.compute(this).invert();
     }
 
     /**
@@ -257,6 +271,22 @@ public interface MatrixView {
 
         for (int index = 0; index < nrow(); ++index)
             result += get(index, index);
+
+        return result;
+    }
+
+    /**
+     * Constructs the transpose of this matrix and returns the result
+     * in a new JamMatrix.
+     *
+     * @return the transpose of this matrix.
+     */
+    default JamMatrix transpose() {
+        JamMatrix result = JamMatrix.dense(ncol(), nrow());
+
+        for (int row = 0; row < result.nrow(); ++row)
+            for (int col = 0; col < result.ncol(); ++col)
+                result.set(row, col, this.get(col, row));
 
         return result;
     }
