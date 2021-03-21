@@ -220,6 +220,31 @@ public interface MatrixView {
     }
 
     /**
+     * Computes the product of this matrix and another matrix and returns
+     * the result in a new JamMatrix.
+     *
+     * @param matrix the (right-hand) matrix factor.
+     *
+     * @return the product of this matrix and the specified matrix in a
+     * new JamMatrix.
+     *
+     * @throws RuntimeException unless the number or rows in the input
+     * matrix matches the number of columns in this matrix.
+     */
+    default JamMatrix times(MatrixView matrix) {
+        if (matrix.nrow() != ncol())
+            throw JamException.runtime("Incongruent matrix factor.");
+
+        JamMatrix result = JamMatrix.dense(nrow(), matrix.ncol());
+
+        for (int row = 0; row < result.nrow(); ++row)
+            for (int col = 0; col < result.ncol(); ++col)
+                result.set(row, col, this.viewRow(row).dot(matrix.viewColumn(col)));
+
+        return result;
+    }
+
+    /**
      * Returns the sum of the diagonal values of this square matrix.
      * @return the sum of the diagonal values of this square matrix.
      * @throws RuntimeException unless this is a square matrix.

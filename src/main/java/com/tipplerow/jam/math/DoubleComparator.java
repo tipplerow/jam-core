@@ -264,6 +264,16 @@ public final class DoubleComparator implements Comparator<Double> {
     }
 
     /**
+     * Returns the <em>machine tolerance</em>: the smallest reasonable
+     * tolerance for comparing floating point values of order one.
+     *
+     * @return the machine tolerance.
+     */
+    public static double epsilon() {
+        return Math.ulp(1.0d);
+    }
+
+    /**
      * Returns the sign of a floating-point value.
      *
      * @param x the value to examine.

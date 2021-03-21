@@ -19,6 +19,7 @@ import java.util.List;
 
 import com.tipplerow.jam.math.DoubleComparator;
 import com.tipplerow.jam.math.JamRandom;
+import com.tipplerow.jam.matrix.JamMatrix;
 
 import static org.testng.Assert.*;
 
@@ -67,5 +68,16 @@ public abstract class NumericTestBase extends JamTestBase {
             random = JamRandom.generator(SEED);
 
         return random;
+    }
+
+    public JamMatrix randomMatrix(int nrow, int ncol) {
+        JamRandom random = random();
+        JamMatrix result = JamMatrix.dense(nrow, ncol);
+
+        for (int row = 0; row < nrow; ++row)
+            for (int col = 0; col < ncol; ++col)
+                result.set(row, col, random.nextDouble());
+
+        return result;
     }
 }

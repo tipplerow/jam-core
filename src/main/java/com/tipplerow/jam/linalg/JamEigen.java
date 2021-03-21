@@ -292,7 +292,7 @@ public final class JamEigen {
      * corresponding eigenvalue).
      *
      * @return the specified eigenvector, whose eigenvalue is equal to
-     * {@code viewValues.getDouble(k)}.
+     * {@code viewValues.get(k)}.
      *
      * @throws IllegalArgumentException unless the eigenvector index
      * is valid.
@@ -306,8 +306,8 @@ public final class JamEigen {
      * right by eigenvalue.
      *
      * @return the eigenvectors as matrix columns, ordered from left to
-     * right by eigenvalue: {@code viewVectors.getColumn(k)} has the
-     * corresponding eigenvalue {@code viewValues.getDouble(k)}.
+     * right by eigenvalue: {@code viewVectors.viewColumn(k)} has the
+     * corresponding eigenvalue {@code viewValues.get(k)}.
      */
     public MatrixView viewVectors() {
         return vectors;

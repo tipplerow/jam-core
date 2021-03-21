@@ -140,6 +140,17 @@ public final class JamMatrix implements MatrixView {
     }
 
     /**
+     * Creates a new identity matrix with a given dimension.
+     *
+     * @param dimension the dimension of the identity matrix.
+     *
+     * @return a new identity matrix with the specified dimension.
+     */
+    public static JamMatrix identity(int dimension) {
+        return diag(JamVector.ones(dimension));
+    }
+
+    /**
      * Creates a new matrix using an existing array as the underlying storage.
      * Subsequent changes to the bare array will be reflected in the matrix,
      * and subsequent changes to the matrix will be reflected in the array.
